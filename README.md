@@ -1,5 +1,2 @@
 # VolunteerActivities
-Participants:
-Matin Amoozadeh
-Thinh Pham
-Shadmun Talukder Shahed
+Participants: Matin Amoozadeh, Thinh Pham, Shadmun Talukder Shahed
