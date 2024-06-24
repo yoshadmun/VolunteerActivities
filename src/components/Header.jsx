@@ -2,13 +2,13 @@ function Header(){
 
     return(
         <div className="header">
-            Volunteer Application
+            <h1 style={{display:"flex",marginLeft:"2.5rem",alignItems:"center"}}>Volunteer Application</h1>
             <div className="nav">
                <ul className="ul">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/service">Service</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li className="headerLi"><a className="a" href="/">Home</a></li>
+                <li className="headerLi"><a className="a" href="/contact">Contact</a></li>
+                <li className="headerLi"><a className="a" href="/register">Register</a></li>
+                <li className="headerLi"><a className="a" href="/login">Login</a></li>
                </ul>
             </div>
         </div>
