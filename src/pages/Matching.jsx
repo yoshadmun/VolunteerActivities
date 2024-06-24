@@ -11,28 +11,26 @@ function VolunteerMatchingForm() {
   const [matchedVolunteers, setMatchedVolunteers] = useState([]);
   const [selecting, setSelecting] = useState('volunteer'); // 'volunteer' or 'event'
 
-  useEffect(() => {
-    fetchVolunteers().then(data => setVolunteers(data));
-    fetchEvents().then(data => setEvents(data));
+  useEffect(()=>{
+    fetchVolunteers().then(data=>setVolunteers(data));
+    fetchEvents().then(data=>setEvents(data));
   }, []);
 
-  useEffect(() => {
+  useEffect(()=>{
     if (selectedVolunteer) {
-      const matchedEvents = events.filter(event =>
-        event.requirements.some(req => selectedVolunteer.skills.includes(req))
-      );
-      setMatchedEvents(matchedEvents);
-      setSelectedEvent(null); // Reset selected event when volunteer changes
-    }
-  }, [selectedVolunteer, events]);
+      const matchedEvents = events.filter(event => 
+      event.requirements.some(req=>selectedVolunteer.skills.includes(req))
+    );
+    setMatchedEvents(matchedEvents);
+  }
+}, [selectedVolunteer, events])
 
-  useEffect(() => {
-    if (selectedEvent) {
-      const matchedVolunteers = volunteers.filter(volunteer =>
-        volunteer.skills.some(skill => selectedEvent.requirements.includes(skill))
+  useEffect(()=>{
+    if(selectedEvent){
+      const matchedVolunteers = volunteers.filter(volunteer=>
+        volunteer.skills.some(skill=>selectedEvent.requirements.includes(skill))
       );
       setMatchedVolunteers(matchedVolunteers);
-      setSelectedVolunteer(null); // Reset selected volunteer when event changes
     }
   }, [selectedEvent, volunteers]);
 
@@ -66,8 +64,26 @@ function VolunteerMatchingForm() {
     setSelectedEvent(event);
   };
 
+  const handleReset = () => {
+    setSelectedVolunteer(null); // Reset selected volunteer state
+    setSelectedEvent(null); // Reset selected event state
+    setMatchedEvents([]); // Clear matched events
+    setMatchedVolunteers([]); // Clear matched volunteers
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const data = {
+      volunteer: selectedVolunteer,
+      event: selectedEvent
+    };
+    console.log('Form submitted:', data);
+    // Handle form submission logic here (e.g., send data to an API)
+  };
+
   return (
-    <form className="volunteer-matching-form">
+    <div className='container'>
+    <form className="matchingForm" onSubmit={handleSubmit}>
       <h1>Volunteer Matching Form</h1>
       <div className="toggle-buttons">
         <button type="button" onClick={() => setSelecting('volunteer')}>
@@ -85,6 +101,8 @@ function VolunteerMatchingForm() {
               id="volunteer"
               options={volunteerOptions}
               onChange={handleVolunteerChange}
+              value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.name } : null}
+              placeholder="Select volunteer..."
             />
           </div>
           <div className="form-group">
@@ -94,6 +112,7 @@ function VolunteerMatchingForm() {
               options={matchedEventOptions}
               onChange={handleEventChange}
               isDisabled={!matchedEvents.length}
+              placeholder="Select event..."
             />
           </div>
         </>
@@ -105,6 +124,8 @@ function VolunteerMatchingForm() {
               id="event"
               options={eventOptions}
               onChange={handleEventChange}
+              value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.name } : null}
+              placeholder="Select event..."
             />
           </div>
           <div className="form-group">
@@ -114,23 +135,21 @@ function VolunteerMatchingForm() {
               options={matchedVolunteerOptions}
               onChange={handleVolunteerChange}
               isDisabled={!matchedVolunteers.length}
+              placeholder="Select volunteer..."
             />
           </div>
         </>
       )}
-      {selectedEvent && (
-        <div className="form-group">
-          <label>Selected Event:</label>
-          <p>{selectedEvent.name}</p>
-        </div>
-      )}
-      {selectedVolunteer && (
-        <div className="form-group">
-          <label>Selected Volunteer:</label>
-          <p>{selectedVolunteer.name}</p>
-        </div>
-      )}
+      <div className="form-actions" style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <button type="button" onClick={handleReset}>
+          Reset
+        </button>
+        <button type="submit">
+          Submit
+        </button>
+      </div>
     </form>
+    </div>
   );
 }
 

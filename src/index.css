@@ -4,8 +4,8 @@ html {
 }
 
 body {
-  overflow: auto;
-  height: 100%;
+  overflow: hidden;
+  max-height: 100%;
   overscroll-behavior: none;
 }
 .header{
@@ -51,12 +51,15 @@ body {
 
 .form{
   display: flex;
-  width: 100%;
+  max-width: 800px;
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+  margin: 2rem auto;
+  padding: 40px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .name{
@@ -93,3 +96,54 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.matchingForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px; /* Increased the max-width */
+  margin: 2rem auto;
+  padding: 40px; /* Increased the padding */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added a subtle shadow for better appearance */
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.toggle-buttons button {
+  margin: 0 10px;
+  padding: 15px 30px; /* Increased the padding */
+  background-color: #79b2ee;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem; /* Increased the font size */
+}
+
+.toggle-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.form-group {
+  margin-bottom: 20px; /* Increased the margin */
+}
+
+.form-group label {
+  display: flex;
+  margin-bottom: 10px; /* Increased the margin */
+  font-size: 1.1rem; /* Increased the font size */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px; /* Increased the padding */
+  box-sizing: border-box;
+  font-size: 1rem; /* Increased the font size */
+}
+
+
