@@ -3,15 +3,37 @@ import { Link } from 'react-router-dom';
 
 function Header() {
   return (
-    <div className="header">
-      <h1 style={{ display: "flex", marginLeft: "2.5rem", alignItems: "center" }}>Volunteer Application</h1>
-      <div className="nav">
-        <ul className="ul">
-          <li className="headerLi"><Link className="a" to="/eventform">Event Form</Link></li>
-          <li className="headerLi"><Link className="a" to="/matching">Matching</Link></li>
-        </ul>
-      </div>
+    <>
+    <div className='headerpage1'>
+        <div style={{paddingLeft:'2.5rem', paddingTop:'1.25rem',fontSize:'2rem',fontFamily:'fantasy'}}>
+          Volunteer Nexus
+        </div>
+
+        <div className='headerpage2'>
+          <ul className='headerUl1'>
+            <li className='headerLi'>
+              <Link to='/'>Home</Link>
+            </li>
+            <li className='headerLi'>
+              <Link to='/eventform'>Event Form</Link>
+            </li>
+            <li className='headerLi'>
+              <Link to='/matching'>Matching</Link>
+            </li>
+            <li className='headerLi'>
+              <button style={{backgroundColor:'transparent'}}>
+                <Link to='/login'>Login</Link>
+              </button>
+            </li>
+            <li className='headerLi'>
+              <button style={{backgroundColor:'#5d5fc0'}}>
+                <Link to='/register'>Register</Link>
+              </button>
+            </li>
+          </ul>
+        </div>
     </div>
+    </>
   );
 }
 

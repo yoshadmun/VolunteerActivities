@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
   max-height: 100%;
   overscroll-behavior: none;
 }
@@ -146,4 +146,117 @@ body {
   font-size: 1rem; /* Increased the font size */
 }
 
+.pagination button {
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  background-color: #79b2ee;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.pagination button:hover {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  margin: 0 10px;
+}
+
+.button{
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  background-color: #5d5fc0;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.homepage1{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-wrap: pretty;
+  padding-bottom: 15rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.headerHomepage1{
+  display: flex;
+  width: 80rem;
+  flex-direction: row;
+  text-wrap: pretty;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 5rem;
+}
+
+.homepage2{
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.homepage3{
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.homepage4{
+  display: flex;
+  height: 23rem;
+  min-width: 45rem;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-color: rgba(42, 151, 184,.7);
+}
+
+.card{
+  list-style-type: disc;
+  padding-left: 8rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.headerpage1{
+  display: flex;
+  height: 4rem;
+  width: 100%;
+  justify-content: space-between;
+  overflow-x: hidden;
+  background-color: transparent;
+}
+
+.headerpage2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  margin-right: 2.5rem;
+}
+
+.headerUl1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  min-height: 100%;
+}
+
+.headerLi{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

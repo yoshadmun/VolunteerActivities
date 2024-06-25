@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import Select from 'react-select'
+import Header from '../components/Header';
 
 function EventForm() {
-    const [eventData,setEvenData] = useState({
+    const [eventData,setEventData] = useState({
         eventName:'',
         eventDescription:'',
         streetAddress:'',
@@ -14,6 +15,24 @@ function EventForm() {
         eventDate:''
     });
 
+    const handleReset = () => {
+        setEventData({
+          eventName: '',
+          eventDescription: '',
+          streetAddress: '',
+          city: '',
+          state: '',
+          zipcode: '',
+          requiredSkills: [],
+          urgency: '',
+          eventDate: ''
+        });
+      };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Event Data', eventData);
+    }; 
     //const skillsOptions = ['Leadership','Cultural Awareness','Adaptability','Teamwork','Communication'];
     const options = [
         {value:'css', label: 'CSS'},
@@ -89,7 +108,7 @@ function EventForm() {
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
-        setEvenData({
+        setEventData({
             ...eventData,
             [name]: value
         });
@@ -104,26 +123,22 @@ function EventForm() {
    // };
 
     const handleSkillsChange = (selectedOptions)=>{
-        setEvenData({
+        setEventData({
             ...eventData,
             requiredSkills: selectedOptions
         })
     };
     const handleUrgencyChange = (selectedUrgency)=>{
-        setEvenData({
+        setEventData({
             ...eventData,
             urgency: selectedUrgency
         })
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Event Data', eventData)
     };
 
     return(
         <>
             <div className='container'>
+            <Header/>
             <form onSubmit={handleSubmit} className='form'>
             <h1>Event Management Form</h1>
             <input
@@ -207,6 +222,14 @@ function EventForm() {
                 options={urgencyOptions}
                 required
             />
+            <div className="form-actions" style={{display:'flex',justifyContent:'space-evenly',gap:'100px'}}>
+            <button className="button" type="button" onClick={handleReset}>
+              Reset
+            </button>
+            <button className="button" type="submit">
+              Submit
+            </button>
+          </div>
         </form>
             </div>
         </>
