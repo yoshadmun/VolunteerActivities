@@ -22,12 +22,12 @@ function Header() {
             </li>
             <li className='headerLi'>
               <button style={{backgroundColor:'transparent'}}>
-                <Link to='/login'>Login</Link>
+                <Link to='/'>Login</Link>
               </button>
             </li>
             <li className='headerLi'>
               <button style={{backgroundColor:'#5d5fc0'}}>
-                <Link to='/register'>Register</Link>
+                <Link to='/'>Register</Link>
               </button>
             </li>
           </ul>

@@ -74,8 +74,9 @@ body {
   height: 2.5rem;
   width: 100%;
   max-width: 28rem;
-  border-radius: calc(var(--radius)-2px);
+  border-radius: 5px;
   border-width: 1px;
+  border-color: transparent;
 }
 
 .container{
@@ -259,4 +260,48 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.datepicker{
+  display: flex;
+  height: 1rem;
+  width: 95%;
+  max-width: 28rem;
+  border-radius: 5px;
+  border-width: 1px;
+  padding: 0.5rem;
+  font-size: 13px;
+  border-color: transparent;
+}
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.dashboard-content {
+  text-align: center;
+}
+
+.dashboard-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.dashboard-link {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: #79b2ee;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.dashboard-link:hover {
+  background-color: #0056b3;
 }
