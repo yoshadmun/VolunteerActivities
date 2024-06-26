@@ -5,6 +5,7 @@ import Matching from './pages/Matching';
 import Home from './pages/Home';
 import AdminDashboard from './pages/AdminDashboard';
 import ViewVolunteerProfiles from './pages/Profile';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/matching" element={<Matching />} />
         <Route path="/admindashboard" element={<AdminDashboard/>}/>
         <Route path="profile" element={<ViewVolunteerProfiles/>}/>
+        <Route path="login" element={<Login/>}/>
       </Routes>
     </Router>
   );
