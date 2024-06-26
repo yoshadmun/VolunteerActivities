@@ -305,3 +305,174 @@ body {
 .dashboard-link:hover {
   background-color: #0056b3;
 }
+
+/* Matin style css in her */
+.login{
+  padding: 40px;
+  max-width: 800px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(15px);
+  margin: 2rem auto;
+}
+
+.input-box, .input-box-optional {
+  position: relative;
+  width: 310px;
+  margin: 30px 0;
+  border-bottom: 2px solid #fff;
+  transition: border-bottom-color 0.3s ease;
+}
+
+.input-box .icon {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.input-box label, .input-box-optional label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.input-box input, .input-box textarea, .input-box select,
+.input-box-optional input, .input-box-optional textarea, .input-box-optional select {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: #fff;
+  padding: 0 8px 0 5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.input-box input:focus, .input-box textarea:focus, .input-box select:focus,
+.input-box-optional input:focus, .input-box-optional textarea:focus, .input-box-optional select:focus {
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.input-box input:valid ~ label, .input-box textarea:valid ~ label,
+.input-box input:focus ~ label, .input-box textarea:focus ~ label,
+.input-box select:valid ~ label, .input-box select:focus ~ label,
+.input-box-optional input:valid ~ label, .input-box-optional textarea:valid ~ label,
+.input-box-optional input:focus ~ label, .input-box-optional textarea:focus ~ label,
+.input-box-optional select:valid ~ label, .input-box-optional select:focus ~ label {
+  top: -5px;
+  font-size: 0.8em;
+  color: #ffcc00;
+}
+
+.input-box-optional {
+  opacity: 0.7;
+}
+
+.input-box.optional label {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.input-box.optional input:focus ~ label,
+.input-box.optional input:valid ~ label,
+.input-box.optional select:focus ~ label,
+.input-box.optional select:valid ~ label {
+  top: -5px;
+  color: #ffcc00;
+}
+
+.input-box select[multiple], .input-box-optional select[multiple] {
+  height: auto;
+  padding: 5px 8px;
+}
+
+.remember-forgot {
+  margin: -15px 0 15px;
+  font-size: 0.9em;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.remember-forgot a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+.loginbutton{
+  width: 100%;
+  height: 40px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 1em;
+  color: black;
+  font-weight: 500;
+}
+
+.register {
+  padding: 40px;
+  max-width: 800px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(15px);
+  margin: 2rem auto;
+}
+
+.register-link, .login-link {
+  font-size: 0.9em;
+  color: #fff;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+
+.register-link p a, .login-link p a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link p a:hover, .login-link p a:hover {
+  text-decoration: underline;
+}
+
+h2 {
+
+  font-size: 2em;
+  color: #fff;
+  text-align: center;
+  margin-top: 30px;
+}
+
+p {
+  font-size: 1em;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
+}

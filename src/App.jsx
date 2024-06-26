@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import AdminDashboard from './pages/AdminDashboard';
 import ViewVolunteerProfiles from './pages/Profile';
 import Login from './pages/Login';
-
+import Register from './pages/Register';
 function App() {
   return (
     <Router>
@@ -17,6 +17,7 @@ function App() {
         <Route path="/admindashboard" element={<AdminDashboard/>}/>
         <Route path="profile" element={<ViewVolunteerProfiles/>}/>
         <Route path="login" element={<Login/>}/>
+        <Route path='register' element={<Register/>}/>
       </Routes>
     </Router>
   );

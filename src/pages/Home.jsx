@@ -10,10 +10,10 @@ const Home = () => {
                     <h1 className="headerHomepage1">Let's help the world gets better. Be a volunteer with us!</h1>
                     <div className="homepage2">
                         <button className="button">
-                            <Link to="/">Login</Link>
+                            <Link to="/login">Login</Link>
                         </button>
                         <button className="button">
-                            <Link to="/">Register</Link>
+                            <Link to="/register">Register</Link>
                         </button>
                         <button className="button">
                             <Link to="/admindashboard">Admin</Link>

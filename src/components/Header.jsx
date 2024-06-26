@@ -5,7 +5,7 @@ function Header() {
   return (
     <>
     <div className='headerpage1'>
-        <div style={{paddingLeft:'', paddingTop:'',fontSize:'2rem',fontFamily:'fantasy'}}>
+        <div style={{paddingLeft:'2rem', paddingTop:'1rem',fontSize:'2rem',fontFamily:'fantasy'}}>
           Volunteer Nexus
         </div>
 
@@ -27,7 +27,7 @@ function Header() {
             </li>
             <li className='headerLi'>
               <button style={{backgroundColor:'#5d5fc0'}}>
-                <Link to='/'>Register</Link>
+                <Link to='/register'>Register</Link>
               </button>
             </li>
           </ul>

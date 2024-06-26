@@ -1,17 +1,22 @@
 import React from 'react';
-import '../matinstyle.css';
 import Header from '../components/Header';
-
-const Login = () => {
+const Register = () => {
     return (
-        <>      
+        <>
             <div className="container">
-            <Header/>
                 {/* Login Form */}
-                <div className="login">
+            <Header/>
+                {/* Register Form */}
+                <div className="register">
                     <form action="#">
-                        <h2>Login</h2>
-                        <p style={{marginTop:'1rem'}}>Please login to use the platform</p>
+                        <h2>Registration</h2>
+                        <p>Please provide the following to verify your identity</p>
+
+                        <div className="input-box">
+                            <span className="icon"><i className='bx bx-user'></i></span>
+                            <input type="text" required />
+                            <label>Full Name</label>
+                        </div>
 
                         <div className="input-box">
                             <span className="icon"><i className='bx bx-envelope'></i></span>
@@ -25,20 +30,15 @@ const Login = () => {
                             <label>Password</label>
                         </div>
 
-                        <div className="remember-forgot">
-                            <label><input type="checkbox" style={{marginRight:'5px'}} />Remember me</label>
-                            <a href="#">Forgot password?</a>
-                        </div>
-
-                        <button className='loginbutton' type="submit">Login</button>
-                        <div className="register-link">
-                            <p>Don't have an account? <a href="#">Register</a></p>
+                        <button className='loginbutton' type="submit">Register</button>
+                        <div className="login-link">
+                            <p>Already have an account? <a href="#">Login</a></p>
                         </div>
                     </form>
                 </div>
-            </div>        
+            </div>
         </>
     );
 };
 
-export default Login;
+export default Register;
