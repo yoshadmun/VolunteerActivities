@@ -5,7 +5,7 @@ const VolunteerHistory = () => {
     return (
         <div className="container">
             <Header/>
-            <h1>Volunteer History</h1>
+            <div style={{display:'flex',justifyContent:'center',fontSize:'2rem',fontFamily:'monospace',padding:'2rem'}}>Volunteer History</div>
             <table>
                 <thead>
                     <tr>

@@ -98,6 +98,14 @@ body {
   background-size: cover;
 }
 
+.profiles-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 .matchingForm {
   display: flex;
   flex-direction: column;
@@ -131,7 +139,7 @@ body {
 }
 
 .form-group {
-  margin-bottom: 20px; /* Increased the margin */
+  margin-bottom: 20px;
 }
 
 .form-group label {
@@ -319,6 +327,91 @@ body {
 }
 
 
+.events-list {
+  list-style: none;
+  padding: 0;
+}
+
+.event-card { 
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  background-color: #79b2ee;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.event-card h3 {
+  margin-top: 0;
+}
+
+.event-card p {
+  margin: 10px 0;
+}
+
+.events-section h2 {
+  margin-bottom: 20px;
+  color: white;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-family: monospace;
+  padding: 2rem;
+  color: white;
+}
+
+.notifications-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.notification-section h2 {
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.notification-list {
+  list-style: none;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #79b2ee;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.notification-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
+}
+
+
+
+.search-input{
+  width: 300px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  padding: 0.5rem;
+  font-size: 1rem; /* Adjust font size as needed */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease-in-out;
+}
 /* Matin style css starts here */
 .login{
   padding: 40px;
@@ -497,13 +590,14 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  table-layout: fixed;
 }
 
-th,
-td {
+table,th,td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 
 th {
@@ -511,11 +605,13 @@ th {
   color: white;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
+th, td {
+  padding: 10px;
+  text-align: left;
 }
 
 tr:hover {
-  background-color: #e0f7fa;
+  background-color: rgb(104, 196, 104);
 }
 /* Shad style css */
+

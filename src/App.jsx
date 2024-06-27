@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import VolunteerHistory from './pages/VolunteerHistory';
 import Notifications from './pages/Notification';
+import User from './pages/User';
 function App() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/volunteerhistory' element={<VolunteerHistory/>}/>
         <Route path='/notification' element={<Notifications/>}/>
+        <Route path='/user' element={<User/>}/>
       </Routes>
     </Router>
   );

@@ -18,12 +18,12 @@ function Header() {
             </li>
             <li className='headerLi'>
             <button className='button'>
-                <Link className='link'to='/eventform'>Event Form</Link>
+                <Link className='link'to='/user'>User</Link>
               </button>
             </li>
             <li className='headerLi'>
             <button className='button'>
-                <Link className='link'to='/matching'>Matching</Link>
+                <Link className='link'to='/admindashboard'>Admin</Link>
               </button>
             </li>
             <li className='headerLi'>
@@ -34,6 +34,11 @@ function Header() {
             <li className='headerLi'>
               <button className='button'>
                 <Link className='link'to='/register'>Register</Link>
+              </button>
+            </li>
+            <li className='headerLi'>
+              <button className='button'>
+                <Link className='link'to='/notification'>Notification</Link>
               </button>
             </li>
           </ul>

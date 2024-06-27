@@ -15,12 +15,6 @@ const Home = () => {
                         <button className="button">
                             <Link style={{textDecoration:'none',color:'inherit'}} to="/register">Register</Link>
                         </button>
-                        <button className="button">
-                            <Link style={{textDecoration:'none',color:'inherit'}} to="/admindashboard">Admin</Link>
-                        </button>
-                        <button className="button">
-                            <Link style={{textDecoration:'none',color:'inherit'}} to="/notification">Notification</Link>
-                        </button>
                     </div>
                 </div>
                 <div className="homepage3">
