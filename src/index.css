@@ -168,11 +168,14 @@ body {
 .button{
   padding: 10px 20px;
   margin-bottom: 15px;
-  background-color: #5d5fc0;
-  color: black;
+  background-color: #79b2ee;
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+.button:hover{
+  background-color: #0056b3;
 }
 
 .homepage1{
@@ -187,7 +190,7 @@ body {
 
 .headerHomepage1{
   display: flex;
-  width: 80rem;
+  max-width: 80rem;
   flex-direction: row;
   text-wrap: pretty;
   text-align: center;
@@ -209,14 +212,16 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  gap: 2.5rem;
+  gap: 10rem;
   padding-bottom: 2.5rem;
 }
 
 .homepage4{
   display: flex;
-  height: 23rem;
-  min-width: 45rem;
+  height: auto;
+  width: 100%;
+  max-width: 45rem;
+  margin: 0 auto;
   flex-direction: column;
   border-radius: 1rem;
   background-color: rgba(42, 151, 184,.7);
@@ -224,9 +229,10 @@ body {
 
 .card{
   list-style-type: disc;
-  padding-left: 8rem;
   font-size: 1.5rem;
   line-height: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .headerpage1{
@@ -293,7 +299,8 @@ body {
 }
 
 .dashboard-link {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   padding: 1rem 2rem;
   background-color: #79b2ee;
   color: white;
@@ -306,7 +313,13 @@ body {
   background-color: #0056b3;
 }
 
-/* Matin style css in her */
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* Matin style css starts here */
 .login{
   padding: 40px;
   max-width: 800px;
@@ -476,3 +489,33 @@ p {
   text-align: center;
   margin-bottom: 30px;
 }
+
+/* Matin style css ends here */
+
+/* Shad style css */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #e0f7fa;
+}
+/* Shad style css */

@@ -5,29 +5,35 @@ function Header() {
   return (
     <>
     <div className='headerpage1'>
-        <div style={{paddingLeft:'2rem', paddingTop:'1rem',fontSize:'2rem',fontFamily:'fantasy'}}>
-          Volunteer Nexus
+        <div style={{paddingLeft:'2rem', paddingTop:'1rem',fontSize:'3rem',fontFamily:'fantasy',overflowY:'hidden'}}>
+          <Link style={{textDecoration:'none',color:'inherit'}}to='/'>Volunteer Nexus</Link>
         </div>
 
         <div className='headerpage2'>
           <ul className='headerUl1'>
             <li className='headerLi'>
-              <Link to='/'>Home</Link>
-            </li>
-            <li className='headerLi'>
-              <Link to='/eventform'>Event Form</Link>
-            </li>
-            <li className='headerLi'>
-              <Link to='/matching'>Matching</Link>
-            </li>
-            <li className='headerLi'>
-              <button style={{backgroundColor:'transparent'}}>
-                <Link to='/login'>Login</Link>
+            <button className='button'>
+                <Link className='link'to='/'>Home</Link>
               </button>
             </li>
             <li className='headerLi'>
-              <button style={{backgroundColor:'#5d5fc0'}}>
-                <Link to='/register'>Register</Link>
+            <button className='button'>
+                <Link className='link'to='/eventform'>Event Form</Link>
+              </button>
+            </li>
+            <li className='headerLi'>
+            <button className='button'>
+                <Link className='link'to='/matching'>Matching</Link>
+              </button>
+            </li>
+            <li className='headerLi'>
+              <button className='button'>
+                <Link className='link'to='/login'>Login</Link>
+              </button>
+            </li>
+            <li className='headerLi'>
+              <button className='button'>
+                <Link className='link'to='/register'>Register</Link>
               </button>
             </li>
           </ul>

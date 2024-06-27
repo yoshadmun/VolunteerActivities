@@ -10,13 +10,16 @@ const Home = () => {
                     <h1 className="headerHomepage1">Let's help the world gets better. Be a volunteer with us!</h1>
                     <div className="homepage2">
                         <button className="button">
-                            <Link to="/login">Login</Link>
+                            <Link style={{textDecoration:'none',color:'inherit'}} to="/login">Login</Link>
                         </button>
                         <button className="button">
-                            <Link to="/register">Register</Link>
+                            <Link style={{textDecoration:'none',color:'inherit'}} to="/register">Register</Link>
                         </button>
                         <button className="button">
-                            <Link to="/admindashboard">Admin</Link>
+                            <Link style={{textDecoration:'none',color:'inherit'}} to="/admindashboard">Admin</Link>
+                        </button>
+                        <button className="button">
+                            <Link style={{textDecoration:'none',color:'inherit'}} to="/notification">Notification</Link>
                         </button>
                     </div>
                 </div>

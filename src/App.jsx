@@ -7,6 +7,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import ViewVolunteerProfiles from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import VolunteerHistory from './pages/VolunteerHistory';
+import Notifications from './pages/Notification';
 function App() {
   return (
     <Router>
@@ -15,9 +17,11 @@ function App() {
         <Route path="/eventform" element={<EventForm />} />
         <Route path="/matching" element={<Matching />} />
         <Route path="/admindashboard" element={<AdminDashboard/>}/>
-        <Route path="profile" element={<ViewVolunteerProfiles/>}/>
-        <Route path="login" element={<Login/>}/>
-        <Route path='register' element={<Register/>}/>
+        <Route path="/profile" element={<ViewVolunteerProfiles/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/volunteerhistory' element={<VolunteerHistory/>}/>
+        <Route path='/notification' element={<Notifications/>}/>
       </Routes>
     </Router>
   );
