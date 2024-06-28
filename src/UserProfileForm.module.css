@@ -1,0 +1,34 @@
+
+  .container {
+    min-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    animation: animateBG 5s linear infinite;
+    overflow-y: auto;
+  }
+  
+ 
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  
+  input[type="text"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  select[multiple] {
+    height: 100px;
+  }
+  
+  

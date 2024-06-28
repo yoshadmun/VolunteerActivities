@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import VolunteerHistory from './pages/VolunteerHistory';
 import Notifications from './pages/Notification';
 import User from './pages/User';
+import UserProfileForm from './pages/UserProfileForm';
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Route path='/volunteerhistory' element={<VolunteerHistory/>}/>
         <Route path='/notification' element={<Notifications/>}/>
         <Route path='/user' element={<User/>}/>
+        <Route path='userprofileform' element={<UserProfileForm/>}/>
       </Routes>
     </Router>
   );

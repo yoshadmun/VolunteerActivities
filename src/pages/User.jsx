@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
 
 const User = () => {
   // Mock data for demonstration
@@ -26,6 +27,18 @@ const User = () => {
         <Header/>
       <div style={{display:'flex',justifyContent:'center',fontSize:'2rem',fontFamily:'monospace',padding:'2rem'}}>User Dashboard</div>  
       <div style={{display:'flex',justifyContent:'space-around',flexDirection:'row'}}>
+
+      <section className="events-section">
+        <h2>
+          <Link className='link'to='/userprofileform'>Edit Profile</Link>
+        </h2>
+        <div className="event-card">
+          <h3 style={{textAlign:'center'}}>User name</h3>
+          <p>User Address</p>
+          <p><strong>Date:</strong> User Skills</p>
+        </div>
+      </section>
+
       <section className="events-section">
         <h2>Current Assigned Event</h2>
         <div className="event-card">
