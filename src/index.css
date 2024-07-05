@@ -614,4 +614,14 @@ tr:hover {
   background-color: rgb(104, 196, 104);
 }
 /* Shad style css */
+@media (max-width: 768px) {
+  .header {
+    font-size: 2rem; /* Adjust font size for smaller screens */
+  }
+}
 
+@media (max-width: 480px) {
+  .header {
+    font-size: 1.5rem; /* Further adjust font size for very small screens */
+  }
+}

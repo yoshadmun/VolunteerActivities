@@ -3,6 +3,7 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Header from '../components/Header';
+import axios from 'axios';
 
 function EventForm() {
   const [eventData, setEventData] = useState({
@@ -33,7 +34,14 @@ function EventForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Event Data', eventData);
+    axios.post('http://localhost:5000/api/events', eventData)
+    .then(response => {
+      console.log('Event created: ', response.data);
+      handleReset();
+    })
+    .catch(error=>{
+      console.error('There was an error creating the event!', error);
+    });
   };
 
   const options = [
