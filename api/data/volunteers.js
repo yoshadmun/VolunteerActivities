@@ -20,6 +20,5 @@ const volunteers = [
     { id: 19, name: 'Samuel King', skills: ['Public Relations', 'Media Relations'] },
     { id: 20, name: 'Taylor Scott', skills: ['Graphic Design', 'Illustration'] }
   ];
-  
   module.exports = volunteers;
   

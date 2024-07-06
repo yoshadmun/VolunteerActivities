@@ -10,16 +10,24 @@ describe('Event API', () => {
 
   it('should create a new event', async () => {
     const newEvent = {
-      name: 'Event Test',
-      description: 'Test Description',
-      location: 'Test Location',
-      requirements: ['Leadership'],
+      name: 'Sample Event',
+      description: 'This is a sample event',
+      location: {
+        address: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipcode: '12345'
+      },
+      requirements: ['Leadership', 'Communication'],
       urgency: 'High',
-      date: new Date().toISOString(),
+      date: '2023-12-25'
     };
     const res = await request(app)
       .post('/api/events')
       .send(newEvent);
+    if (res.statusCode !== 201) {
+      console.error('Response body:', res.body);
+    }
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('id');
   });
@@ -28,7 +36,12 @@ describe('Event API', () => {
     const newEvent = {
       name: '',
       description: '',
-      location: '',
+      location: {
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+      },
       requirements: [],
       urgency: '',
       date: '',

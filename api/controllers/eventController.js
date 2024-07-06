@@ -5,7 +5,7 @@ const getEvents = (req,res) => {
 };
 
 const createEvent = (req,res) => {
-    const newEvent = {...req.body, id: events.length +1};
+    const newEvent = {id: events.length +1, ...req.body};
     events.push(newEvent);
     res.status(201).json(newEvent);
 };
