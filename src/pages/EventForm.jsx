@@ -34,7 +34,7 @@ function EventForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/events', eventData)
+    axios.post('http://localhost:3001/api/events', eventData)
     .then(response => {
       console.log('Event created: ', response.data);
       handleReset();

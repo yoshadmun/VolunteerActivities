@@ -3,26 +3,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const eventRoutes = require('./routes/eventRoutes');
-const volunteerRoutes = require('./routes/volunteerRoutes')
+const volunteerRoutes = require('./routes/volunteerRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
-const corsOptions ={
-    origin:'http://localhost:5173', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+app.use(cors());
+
 app.use(bodyParser.json());
 
 app.use('/api/events', eventRoutes);
 app.use('/api/volunteers', volunteerRoutes);
 
-if(process.env.NODE_ENV !== 'test'){
-    app.listen(PORT, () => {
-        console.log('Server is running on http://localhost:${PORT}');
-    });
-}
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 module.exports = app;
