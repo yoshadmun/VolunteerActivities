@@ -9,32 +9,50 @@ function EventForm() {
   const [eventData, setEventData] = useState({
     eventName: '',
     eventDescription: '',
-    streetAddress: '',
-    city: '',
-    state: '',
-    zipcode: '',
+    location: {
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipcode: '',
+    },
     requiredSkills: [],
     urgency: '',
-    eventDate: null
+    eventDate: ''
   });
 
   const handleReset = () => {
     setEventData({
       eventName: '',
       eventDescription: '',
-      streetAddress: '',
-      city: '',
-      state: '',
-      zipcode: '',
+      location: {
+        streetAddress: '',
+        city: '',
+        state: '',
+        zipcode: '',
+      },
       requiredSkills: [],
       urgency: '',
-      eventDate: null
+      eventDate: ''
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3001/api/events', eventData)
+    const formattedData = {
+      name: eventData.eventName,
+      description: eventData.eventDescription,
+      location: {
+        streetAddress: eventData.location.streetAddress,
+        city: eventData.location.city,
+        state: eventData.location.state,
+        zipcode: eventData.location.zipcode,
+      },
+      requiredSkills: eventData.requiredSkills.map(skill => skill.value),
+      urgency: eventData.urgency.value,
+      date: eventData.eventDate,
+    };
+    console.log('Sending event data: ', formattedData)
+    axios.post('http://localhost:3001/api/events', formattedData)
     .then(response => {
       console.log('Event created: ', response.data);
       handleReset();
@@ -71,6 +89,17 @@ function EventForm() {
       [name]: value
     });
   };
+
+  const handleLocationChange = (e) => {
+    const {name, value} = e.target;
+    setEventData({
+      ...eventData,
+      location: {
+        ...eventData.location,
+        [name]: value
+      }
+    });
+  }
 
   const handleSkillsChange = (selectedOptions) => {
     setEventData({
@@ -124,8 +153,8 @@ function EventForm() {
             placeholder='Street Address'
             type='text'
             name='streetAddress'
-            value={eventData.streetAddress}
-            onChange={handleInputChange}
+            value={eventData.location.streetAddress}
+            onChange={handleLocationChange}
             maxLength={50}
             required
           />
@@ -134,16 +163,16 @@ function EventForm() {
             placeholder='City'
             type='text'
             name='city'
-            value={eventData.city}
-            onChange={handleInputChange}
+            value={eventData.location.city}
+            onChange={handleLocationChange}
             maxLength={30}
             required
           />
           <select
             className='eventForm'
             name='state'
-            value={eventData.state}
-            onChange={handleInputChange}
+            value={eventData.location.state}
+            onChange={handleLocationChange}
             required
           >
             <option value=''>Select a state</option>
@@ -156,8 +185,8 @@ function EventForm() {
             placeholder='Zip Code'
             type='text'
             name='zipcode'
-            value={eventData.zipcode}
-            onChange={handleInputChange}
+            value={eventData.location.zipcode}
+            onChange={handleLocationChange}
             maxLength={5}
             required
           />

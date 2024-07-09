@@ -1,14 +1,14 @@
 const {body, validationResult} = require('express-validator');
 
 const eventValidation = () => [
-    body('name').isString().isLength({ max: 100 }).notEmpty(),
-    body('description').isString().notEmpty(),
+    body('eventName').isString().isLength({ max: 100 }).notEmpty(),
+    body('eventDescription').isString().notEmpty(),
     body('location').isObject().notEmpty(),
-    body('location.address').isString().notEmpty(),
+    body('location.streetAddress').isString().notEmpty(),
     body('location.city').isString().notEmpty(),
     body('location.state').isString().notEmpty(),
     body('location.zipcode').isPostalCode('US').notEmpty(),
-    body('requirements').isArray().notEmpty(),
+    body('requiredSkills').isArray().notEmpty(),
     body('urgency').isString().notEmpty(),
     body('date').isISO8601().notEmpty(),
   ];
