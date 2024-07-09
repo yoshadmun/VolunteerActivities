@@ -1,15 +1,15 @@
 const events = [
-    { id: 1, name: 'Event 1', requirements: ['Leadership', 'Communication'], location: 'Location 1', urgency: 'High', description: 'Description for Event 1', date: new Date('2024-07-10') },
-    { id: 2, name: 'Event 2', requirements: ['Teamwork', 'Problem-Solving'], location: 'Location 2', urgency: 'Medium', description: 'Description for Event 2', date: new Date('2024-07-15') },
-    { id: 3, name: 'Event 3', requirements: ['Creativity', 'Time Management'], location: 'Location 3', urgency: 'Low', description: 'Description for Event 3', date: new Date('2024-07-20') },
-    { id: 4, name: 'Event 4', requirements: ['Technical Skills', 'Adaptability'], location: 'Location 4', urgency: 'High', description: 'Description for Event 4', date: new Date('2024-07-25') },
-    { id: 5, name: 'Event 5', requirements: ['Analytical Thinking', 'Communication'], location: 'Location 5', urgency: 'Medium', description: 'Description for Event 5', date: new Date('2024-07-30') },
-    { id: 6, name: 'Event 6', requirements: ['Leadership', 'Decision-Making'], location: 'Location 6', urgency: 'Low', description: 'Description for Event 6', date: new Date('2024-08-05') },
-    { id: 7, name: 'Event 7', requirements: ['Creativity', 'Innovation'], location: 'Location 7', urgency: 'High', description: 'Description for Event 7', date: new Date('2024-08-10') },
-    { id: 8, name: 'Event 8', requirements: ['Teamwork', 'Negotiation'], location: 'Location 8', urgency: 'Medium', description: 'Description for Event 8', date: new Date('2024-08-15') },
-    { id: 9, name: 'Event 9', requirements: ['Technical Skills', 'Problem-Solving'], location: 'Location 9', urgency: 'Low', description: 'Description for Event 9', date: new Date('2024-08-20') },
-    { id: 10, name: 'Event 10', requirements: ['Analytical Thinking', 'Creativity'], location: 'Location 10', urgency: 'High', description: 'Description for Event 10', date: new Date('2024-08-25') }
+    { id: 1, name: 'Community Clean-Up', requirements: ['Leadership', 'Communication'], location: 'Central Park', urgency: 'High', description: 'Join us for a community clean-up event to help keep Central Park beautiful. Volunteers will lead groups and coordinate activities.', date: new Date('2024-07-10') },
+    { id: 2, name: 'Food Bank Drive', requirements: ['Teamwork', 'Problem-Solving'], location: 'City Food Bank', urgency: 'Medium', description: 'Help us organize and distribute food donations to those in need. Volunteers will work together to sort and pack food items.', date: new Date('2024-07-15') },
+    { id: 3, name: 'Art Workshop for Kids', requirements: ['Creativity', 'Time Management'], location: 'Downtown Community Center', urgency: 'Low', description: 'Conduct an art workshop for children at the community center. Volunteers will assist with art projects and manage the schedule.', date: new Date('2024-07-20') },
+    { id: 4, name: 'Tech for Seniors', requirements: ['Technical Skills', 'Adaptability'], location: 'Senior Living Home', urgency: 'High', description: 'Teach seniors how to use smartphones and computers. Volunteers need technical skills and patience to adapt to individual needs.', date: new Date('2024-07-25') },
+    { id: 5, name: 'Environmental Awareness Campaign', requirements: ['Analytical Thinking', 'Communication'], location: 'City Hall', urgency: 'Medium', description: 'Participate in an environmental awareness campaign. Volunteers will analyze data and help communicate important information to the public.', date: new Date('2024-07-30') },
+    { id: 6, name: 'Youth Leadership Summit', requirements: ['Leadership', 'Decision-Making'], location: 'Convention Center', urgency: 'Low', description: 'Assist in organizing a summit for young leaders. Volunteers will help with decision-making sessions and lead breakout groups.', date: new Date('2024-08-05') },
+    { id: 7, name: 'Innovation Fair', requirements: ['Creativity', 'Innovation'], location: 'Tech Hub', urgency: 'High', description: 'Showcase innovative projects at the annual Innovation Fair. Volunteers will help set up displays and engage with visitors.', date: new Date('2024-08-10') },
+    { id: 8, name: 'Team Building Retreat', requirements: ['Teamwork', 'Negotiation'], location: 'Mountain Retreat Center', urgency: 'Medium', description: 'Facilitate team-building activities at a retreat. Volunteers will help run exercises and mediate group discussions.', date: new Date('2024-08-15') },
+    { id: 9, name: 'Coding Bootcamp', requirements: ['Technical Skills', 'Problem-Solving'], location: 'Tech Academy', urgency: 'Low', description: 'Assist in a coding bootcamp for beginners. Volunteers will provide technical support and help solve coding challenges.', date: new Date('2024-08-20') },
+    { id: 10, name: 'Creative Writing Workshop', requirements: ['Analytical Thinking', 'Creativity'], location: 'Local Library', urgency: 'High', description: 'Lead a creative writing workshop at the library. Volunteers will help participants develop their writing skills and analyze their work.', date: new Date('2024-08-25') }
   ];
-  
+
   module.exports = events;
   
