@@ -625,3 +625,12 @@ tr:hover {
     font-size: 1.5rem; /* Further adjust font size for very small screens */
   }
 }
+.dropdown-content{
+  color: white;
+}
+.dropdown-item{
+  padding: 5px 10px;
+}
+.dropdown-item:focus{
+  background-color:#3175be;
+}

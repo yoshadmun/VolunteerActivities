@@ -11,7 +11,10 @@ import VolunteerHistory from './pages/VolunteerHistory';
 import Notifications from './pages/Notification';
 import User from './pages/User';
 import UserProfileForm from './pages/UserProfileForm';
+import { useAuth0 } from '@auth0/auth0-react';
+
 function App() {
+  const {isAuthenticated} = useAuth0();
   return (
     <Router>
       <Routes>
