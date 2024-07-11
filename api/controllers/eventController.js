@@ -17,6 +17,8 @@ const events = require('../data/events'); // Assume this is an array of event ob
   });
 };*/
 
+
+
 const getEvents = (req,res) => {
   res.json({events: events, total:events.length});
 }
