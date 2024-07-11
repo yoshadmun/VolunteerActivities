@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const eventRoutes = require('./routes/eventRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
-const userProfileRoutes = require('./routes/userProfileRoutes');
+const createUserProfileRoutes = require('./routes/createUserProfileRoutes');
 const matchingRoutes = require('./routes/matchingRoutes');
 const notificationRoutes = require('./routes/notificationRoutes'); 
 const volunteerHistoryRoutes = require('./routes/volunteerHistoryRoutes');
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.use('/api/events', eventRoutes);
 app.use('/api/volunteers', volunteerRoutes);
-app.use('/api/user-profile', userProfileRoutes);
+app.use('/api/user-profile', createUserProfileRoutes);
 app.use('/api/matching', matchingRoutes);
 app.use('/api/notifications', notificationRoutes); 
 app.use('/api/volunteerHistory', volunteerHistoryRoutes);

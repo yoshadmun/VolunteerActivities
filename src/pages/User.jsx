@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const User = () => {
   // Mock data for demonstration
@@ -22,6 +24,25 @@ const User = () => {
     { id: 6, name: 'Elderly Care Visit', description: 'Spending time with the elderly.', date: 'June 20, 2024' },
   ];
 
+  const {user} = useAuth0();
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    if (user && user.sub) {
+      const getProfile = async () => {
+        try {
+          console.log(user.sub);
+          const response = await axios.get(`http://localhost:3001/api/user-profile/${user.sub}`);
+          setProfile(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.log('Error getting profile data: ', error);
+        }
+      };
+      getProfile();
+    }
+  }, [user]);
+
   return (
     <div className="container">
         <Header/>
@@ -33,9 +54,9 @@ const User = () => {
           <Link className='link'to='/userprofileform'>Edit Profile</Link>
         </h2>
         <div className="event-card">
-          <h3 style={{textAlign:'center'}}>User name</h3>
-          <p>User Address</p>
-          <p><strong>Date:</strong> User Skills</p>
+            <h3 style={{ textAlign: 'center' }}>{profile ? profile.fullName : 'User name'}</h3>
+            <p>{profile ? `${profile.location.address1}, ${profile.location.city}, ${profile.location.state} ${profile.location.zipCode}` : 'User Address'}</p>
+            <p><strong>Skills:</strong> {profile ? profile.skills.join(', ') : 'User Skills'}</p>
         </div>
       </section>
 

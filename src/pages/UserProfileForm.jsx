@@ -3,9 +3,11 @@ import styles from '../UserProfileForm.module.css'; // Import the CSS module
 import Header from '../components/Header';
 import Select from 'react-select';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 const UserProfileForm = () => {
+  const {user} = useAuth0();
   const [formData, setFormData] = useState({
     fullName: '',
     location:{
@@ -78,15 +80,18 @@ const UserProfileForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formattedData = {
-      fullName: formData.fullName,
-      location: {
-        address1: formData.location.address1,
-        city: formData.location.city,
-        state: formData.location.state,
-        zipCode: formData.location.zipCode,
-      },
+      userId: user.sub,
+      profileData:{
+        fullName: formData.fullName,
+        location: {
+          address1: formData.location.address1,
+          city: formData.location.city,
+          state: formData.location.state,
+          zipCode: formData.location.zipCode,
+        },
       skills: formData.skills.map(skill => skill.value),
       availability: formData.availability,
+      }
     };
     console.log('Sending event data: ', formattedData)
     axios.post('http://localhost:3001/api/user-profile', formattedData)

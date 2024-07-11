@@ -3,7 +3,7 @@ const {getMatchedEvents, getMatchedVolunteers} = require('../controllers/matchin
 
 const router = express.Router();
 
-router.get('/volunteer/:volunteerId', getMatchedEvents);
-router.get('/event/:eventId',getMatchedVolunteers);
+router.get('/:volunteerId', getMatchedEvents);
+router.get('/:eventId',getMatchedVolunteers);
 
 module.exports=router;
