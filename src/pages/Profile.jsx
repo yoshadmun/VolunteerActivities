@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { fetchVolunteers } from '../MockAPI';
 import Header from '../components/Header';
-
+import axios from 'axios';
 
 function ViewVolunteerProfiles() {
   const [volunteers, setVolunteers] = useState([]);
@@ -10,13 +9,17 @@ function ViewVolunteerProfiles() {
   const [volunteerPage, setVolunteerPage] = useState(1);
   const [volunteerTotal, setVolunteerTotal] = useState(0);
 
-  const pageSize = 10;
+  const pageSize = 20;
 
   useEffect(() => {
-    fetchVolunteers(volunteerSearch, volunteerPage, pageSize).then(response => {
-      setVolunteers(response.data.sort((a, b) => a.name.localeCompare(b.name)));
-      setVolunteerTotal(response.total);
-    });
+    axios.get(`http://localhost:3001/api/volunteers?search=${volunteerSearch}&page=${volunteerPage}&pageSize=${pageSize}`)
+      .then(response => {
+        setVolunteers(response.data.volunteers);
+        setVolunteerTotal(response.data.total);
+      })
+      .catch(error => {
+        console.error('Error fetching volunteers:', error);
+      });
   }, [volunteerSearch, volunteerPage]);
 
   const handleVolunteerChange = selectedOption => {
@@ -41,7 +44,7 @@ function ViewVolunteerProfiles() {
         {selectedVolunteer && (
           <div>
             <h3>Volunteer Profile</h3>
-            <p><strong>Name:</strong> {selectedVolunteer.name}</p>
+            <p><strong>Name:</strong> {selectedVolunteer.fullName}</p>
             <p><strong>Skills:</strong> {selectedVolunteer.skills.join(', ')}</p>
           </div>
         )}
@@ -57,7 +60,7 @@ function ViewVolunteerProfiles() {
             <tbody>
               {volunteers.map(volunteer => (
                 <tr key={volunteer.id}>
-                  <td>{volunteer.name}</td>
+                  <td>{volunteer.fullName}</td>
                   <td>{volunteer.skills.join(', ')}</td>
                 </tr>
               ))}

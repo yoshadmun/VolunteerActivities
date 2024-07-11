@@ -39,8 +39,8 @@ function EventForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formattedData = {
-      name: eventData.eventName,
-      description: eventData.eventDescription,
+      eventName: eventData.eventName,
+      eventDescription: eventData.eventDescription,
       location: {
         streetAddress: eventData.location.streetAddress,
         city: eventData.location.city,
@@ -49,7 +49,7 @@ function EventForm() {
       },
       requiredSkills: eventData.requiredSkills.map(skill => skill.value),
       urgency: eventData.urgency.value,
-      date: eventData.eventDate,
+      date: eventData.eventDate.toISOString(),
     };
     console.log('Sending event data: ', formattedData)
     axios.post('http://localhost:3001/api/events', formattedData)

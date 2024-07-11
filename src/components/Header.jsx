@@ -9,7 +9,11 @@ function Header() {
   const namespace = 'http://localhost:5173/';
   const userRole = user && user[`${namespace}roles`];
   const isAdmin = userRole && userRole.includes('admin');
+  const { loginWithRedirect } = useAuth0();
 
+    const handleLogin = () => {
+        loginWithRedirect();
+    };
   return (
     <>
       <div className='headerpage1'>
@@ -34,13 +38,8 @@ function Header() {
             {!isAuthenticated && (
               <>
                 <li className='headerLi'>
-                  <button className='button'>
-                    <Link className='link' to='/login'>Login</Link>
-                  </button>
-                </li>
-                <li className='headerLi'>
-                  <button className='button'>
-                    <Link className='link' to='/register'>Register</Link>
+                  <button className='button' onClick={handleLogin} >
+                    <Link className='link'>Login</Link>
                   </button>
                 </li>
               </>

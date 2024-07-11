@@ -9,10 +9,8 @@ const Home = () => {
                 <div className="homepage1">
                     <h1 className="headerHomepage1">Let's help the world gets better. Be a volunteer with us!</h1>
                     <div className="homepage2">
-                        <button className="button">
-                            <Link style={{textDecoration:'none',color:'inherit'}} to="/login">Login</Link>
-                        </button>
-                        <button className="button">
+                        
+                        <button style={{padding:'2rem',backgroundColor:'#79b2ee',border:'none',borderRadius:'10px',cursor:'pointer',fontSize:'1.5rem'}}>
                             <Link style={{textDecoration:'none',color:'inherit'}} to="/register">Register</Link>
                         </button>
                     </div>

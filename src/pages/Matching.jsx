@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { fetchVolunteers, fetchEvents } from '../MockAPI';
 import Header from '../components/Header';
+import axios from 'axios';
 
 function VolunteerMatchingForm() {
   const [volunteers, setVolunteers] = useState([]);
@@ -23,23 +23,31 @@ function VolunteerMatchingForm() {
   const pageSize = 10; // Items per page
 
   useEffect(() => {
-    fetchVolunteers(volunteerSearch, volunteerPage, pageSize).then(response => {
-      setVolunteers(response.data);
-      setVolunteerTotal(response.total);
-    });
+    axios.get(`http://localhost:3001/api/volunteers?search=${volunteerSearch}&page=${volunteerPage}&pageSize=${pageSize}`)
+      .then(response => {
+        setVolunteers(response.data.volunteers);
+        setVolunteerTotal(response.data.total);
+      })
+      .catch(error => {
+        console.error('Error fetching volunteers:', error);
+      });
   }, [volunteerSearch, volunteerPage]);
 
   useEffect(() => {
-    fetchEvents(eventSearch, eventPage, pageSize).then(response => {
-      setEvents(response.data);
-      setEventTotal(response.total);
-    });
+    axios.get(`http://localhost:3001/api/events?search=${eventSearch}&page=${eventPage}&pageSize=${pageSize}`)
+      .then(response => {
+        setEvents(response.data.events);
+        setEventTotal(response.data.total);
+      })
+      .catch(error => {
+        console.error('Error fetching events:', error);
+      });
   }, [eventSearch, eventPage]);
 
   useEffect(() => {
     if (selectedVolunteer) {
       const matchedEvents = events.filter(event =>
-        event.requirements.some(req => selectedVolunteer.skills.includes(req))
+        event.requiredSkills.some(req => selectedVolunteer.skills.includes(req))
       );
       setMatchedEvents(matchedEvents);
       if (selecting === "volunteer"){
@@ -51,7 +59,7 @@ function VolunteerMatchingForm() {
   useEffect(() => {
     if (selectedEvent) {
       const matchedVolunteers = volunteers.filter(volunteer =>
-        volunteer.skills.some(skill => selectedEvent.requirements.includes(skill))
+        volunteer.skills.some(skill => selectedEvent.requiredSkills.includes(skill))
       );
       setMatchedVolunteers(matchedVolunteers);
       if (selecting === "event") {
@@ -63,22 +71,22 @@ function VolunteerMatchingForm() {
 
   const volunteerOptions = volunteers.map(volunteer => ({
     value: volunteer.id,
-    label: volunteer.name,
+    label: volunteer.fullName,
   }));
 
   const eventOptions = events.map(event => ({
     value: event.id,
-    label: event.name,
+    label: event.eventName,
   }));
 
   const matchedEventOptions = matchedEvents.slice((matchedEventPage - 1) * pageSize, matchedEventPage * pageSize).map(event => ({
     value: event.id,
-    label: event.name,
+    label: event.eventName,
   }));
 
   const matchedVolunteerOptions = matchedVolunteers.slice((matchedVolunteerPage - 1) * pageSize, matchedVolunteerPage * pageSize).map(volunteer => ({
     value: volunteer.id,
-    label: volunteer.name,
+    label: volunteer.fullName,
   }));
 
   const handleVolunteerChange = selectedOption => {
@@ -145,7 +153,7 @@ function VolunteerMatchingForm() {
                 id="volunteer"
                 options={volunteerOptions}
                 onChange={handleVolunteerChange}
-                value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.name } : null}
+                value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.fullName } : null}
                 placeholder="Select volunteer..."
                 required
               />
@@ -161,14 +169,17 @@ function VolunteerMatchingForm() {
                 id="event"
                 options={matchedEventOptions}
                 onChange={handleEventChange}
-                value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.name } : null}
+                value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.eventName } : null}
                 isDisabled={!matchedEvents.length}
                 placeholder="Select event..."
                 required
               />
               <div className="pagination" style={{marginTop:"20px"}}>
                 <button disabled={matchedEventPage === 1} onClick={() => setMatchedEventPage(matchedEventPage - 1)}>Previous</button>
-                <span>Page {matchedEventPage} of {Math.ceil(matchedEvents.length / pageSize)}</span>
+                <span>{matchedEvents.length === 0
+                      ? "Page 0 of 0"
+                    : `Page ${matchedEventPage} of ${Math.ceil(matchedEvents.length / pageSize)}`}
+                </span>
                 <button disabled={matchedEventPage === Math.ceil(matchedEvents.length / pageSize)} onClick={() => setMatchedEventPage(matchedEventPage + 1)}>Next</button>
               </div>
             </div>
@@ -181,7 +192,7 @@ function VolunteerMatchingForm() {
                 id="event"
                 options={eventOptions}
                 onChange={handleEventChange}
-                value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.name } : null}
+                value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.eventName } : null}
                 placeholder="Select event..."
               />
             </div>
@@ -196,13 +207,16 @@ function VolunteerMatchingForm() {
                 id="volunteer"
                 options={matchedVolunteerOptions}
                 onChange={handleVolunteerChange}
-                value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.name } : null}
+                value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.fullName } : null}
                 isDisabled={!matchedVolunteers.length}
                 placeholder="Select volunteer..."
               />
               <div className="pagination" style={{marginTop:'20px'}}>
                 <button disabled={matchedVolunteerPage === 1} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage - 1)}>Previous</button>
-                <span>Page {matchedVolunteerPage} of {Math.ceil(matchedVolunteers.length / pageSize)}</span>
+                <span>{matchedVolunteers.length === 0
+                      ? "Page 0 of 0"
+                    : `Page ${matchedVolunteerPage} of ${Math.ceil(matchedVolunteers.length / pageSize)}`}
+                </span>
                 <button disabled={matchedVolunteerPage === Math.ceil(matchedVolunteers.length / pageSize)} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage + 1)}>Next</button>
               </div>
             </div>

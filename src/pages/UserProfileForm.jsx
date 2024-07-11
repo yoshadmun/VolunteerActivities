@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import styles from '../UserProfileForm.module.css'; // Import the CSS module
 import Header from '../components/Header';
+import Select from 'react-select';
+import axios from 'axios';
+
 
 const UserProfileForm = () => {
   const [formData, setFormData] = useState({
     fullName: '',
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    zipCode: '',
+    location:{
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    },
     skills: [],
     preferences: '',
     availability: '',
@@ -25,11 +30,75 @@ const UserProfileForm = () => {
     }
   };
 
+  const handleSelectChange = (selectedOptions) => {
+    setFormData({ ...formData, skills: selectedOptions });
+  };
+
+  const handleLocationChange = (e) => {
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      location: {
+        ...formData.location,
+        [name]: value
+      }
+    });
+  }
+
+  const options = [
+    { value: 'css', label: 'CSS' },
+    { value: 'html', label: 'HTML' },
+    { value: 'c++', label: 'C++' }
+  ];
+
+  const states = [
+    'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL',
+    'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH',
+    'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
+    'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC',
+    'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'
+  ];
+
+  const handleReset = () => {
+    setFormData({
+      fullName: '',
+      location:{
+        address1: '',
+        address2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      },
+      skills: [],
+      preferences: '',
+      availability: '',
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    const formattedData = {
+      fullName: formData.fullName,
+      location: {
+        address1: formData.location.address1,
+        city: formData.location.city,
+        state: formData.location.state,
+        zipCode: formData.location.zipCode,
+      },
+      skills: formData.skills.map(skill => skill.value),
+      availability: formData.availability,
+    };
+    console.log('Sending event data: ', formattedData)
+    axios.post('http://localhost:3001/api/user-profile', formattedData)
+    .then(response => {
+      console.log('Profile created: ', response.data);
+      handleReset();
+    })
+    .catch(error=>{
+      console.error('There was an error creating the profile!', error);
+    });
   };
+
 
   return (
     <div className='container'>
@@ -57,8 +126,8 @@ const UserProfileForm = () => {
             name="address1"
             maxLength="100"
             required
-            value={formData.address1}
-            onChange={handleChange}
+            value={formData.location.address1}
+            onChange={handleLocationChange}
           />
         </div>
         <div className={styles['form-group']}>
@@ -68,8 +137,8 @@ const UserProfileForm = () => {
             id="address2"
             name="address2"
             maxLength="100"
-            value={formData.address2}
-            onChange={handleChange}
+            value={formData.location.address2}
+            onChange={handleLocationChange}
           />
         </div>
         <div className={styles['form-group']}>
@@ -80,23 +149,23 @@ const UserProfileForm = () => {
             name="city"
             maxLength="100"
             required
-            value={formData.city}
-            onChange={handleChange}
+            value={formData.location.city}
+            onChange={handleLocationChange}
           />
         </div>
         <div className={styles['form-group']}>
           <label htmlFor="state">State</label>
           <select
-            id="state"
-            name="state"
+            name='state'
+            id='state'
+            value={formData.location.state}
+            onChange={handleLocationChange}
             required
-            value={formData.state}
-            onChange={handleChange}
           >
-            <option value="">Select State</option>
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            {/* Add options for all states here */}
+            <option value=''>Select a state</option>
+            {states.map(state => (
+              <option key={state} value={state}>{state}</option>
+            ))}
           </select>
         </div>
         <div className={styles['form-group']}>
@@ -105,28 +174,24 @@ const UserProfileForm = () => {
             type="text"
             id="zip-code"
             name="zipCode"
-            maxLength="9"
-            pattern="\d{5}(-\d{4})?"
+            maxLength="5"
+            pattern="[0-9]{5}"
             required
-            value={formData.zipCode}
-            onChange={handleChange}
+            value={formData.location.zipCode}
+            onChange={handleLocationChange}
           />
         </div>
         <div className={styles['form-group']}>
           <label htmlFor="skills">Skills</label>
-          <select
-            id="skills"
-            name="skills"
-            multiple
-            required
+          <Select
+            className=''
+            name='skills'
             value={formData.skills}
-            onChange={handleChange}
-          >
-            <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
-            <option value="java">Java</option>
-            {/* Add options for all skills here */}
-          </select>
+            onChange={handleSelectChange}
+            isMulti
+            options={options}
+            required
+          />
         </div>
         <div className={styles['form-group']}>
           <label htmlFor="preferences">Preferences</label>

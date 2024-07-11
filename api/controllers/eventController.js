@@ -1,11 +1,11 @@
 const events = require('../data/events'); // Assume this is an array of event objects
 
-/*const getEvents = (req, res) => {
+const getEvents = (req, res) => {
   const { search = '', page = 1, pageSize = 10 } = req.query;
-
+ 
   // Filter events based on search term
   const filteredEvents = events.filter(e =>
-    e.name.toLowerCase().includes(search.toLowerCase())
+    e.eventName.toLowerCase().includes(search.toLowerCase())
   );
 
   // Paginate the filtered results
@@ -15,11 +15,11 @@ const events = require('../data/events'); // Assume this is an array of event ob
     events: paginatedEvents,
     total: filteredEvents.length,
   });
-};*/
+};
 
-const getEvents = (req,res) => {
+/*const getEvents = (req,res) => {
   res.json({events: events, total:events.length});
-}
+}*/
 
 const createEvent = (req, res) => {
   const newEvent = { ...req.body, id: events.length + 1 };

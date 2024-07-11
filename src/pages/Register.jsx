@@ -1,74 +1,91 @@
 import React, { useState } from 'react';
 import Header from '../components/Header';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
-    const {loginWithRedirect} = useAuth0();
+    const { loginWithRedirect } = useAuth0();
     const [email, setEmail] = useState('');
-    const [password, setpassword] = useState('');
+    const [password, setPassword] = useState('');
     const [fullname, setFullname] = useState('');
+    const [error, setError] = useState('');
+    const handleLogin = () => {
+        loginWithRedirect();
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            await loginWithRedirect({
-                screen_hint: 'signup',
-                email,
-                password,
-                app_metadata: {fullname},
+        try {
+            const response = await axios.post(`https://${import.meta.env.VITE_REACT_APP_AUTH0_DOMAIN}/dbconnections/signup`, {
+                client_id: import.meta.env.VITE_REACT_APP_AUTH0_CLIENT_ID,
+                email: email,
+                password: password,
+                connection: 'Username-Password-Authentication',
+                user_metadata: { fullname }
             });
-        } catch (error){
-            console.log('Error during signup: ', error)
+
+            if (response.data) {
+                // Redirect to login after successful sign-up
+                await loginWithRedirect();
+            }
+        } catch (error) {
+            setError(error.response ? error.response.data.description : 'An error occurred during signup.');
+            console.log('Error during signup: ', error);
         }
     };
 
     return (
         <>
             <div className="container">
-                {/* Login Form */}
-            <Header/>
-                {/* Register Form */}
+                <Header />
                 <div className="register">
                     <form onSubmit={handleSubmit}>
                         <h2>Registration</h2>
                         <p>Please provide the following to verify your identity</p>
 
+                        {error && <p className="error">{error}</p>}
+
                         <div className="input-box">
                             <span className="icon"><i className='bx bx-user'></i></span>
                             <input 
+                                placeholder='Full Name'
                                 type="text" 
                                 required 
                                 value={fullname}
                                 onChange={(e) => setFullname(e.target.value)}
                             />
-                            <label>Full Name</label>
+                            
                         </div>
 
                         <div className="input-box">
-                            <span className="icon"><i className='bx bx-envelope'></i></span>
+                            <span className=""><i className='bx bx-envelope'></i></span>
                             <input 
+                                placeholder='Email'
                                 type="email" 
                                 required 
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-                            <label>Email</label>
+                            
                         </div>
 
                         <div className="input-box">
                             <span className="icon"><i className='bx bxs-lock-alt'></i></span>
-                            <input 
+                            <input
+                                placeholder='Password'
                                 type="password" 
                                 required 
                                 value={password}
-                                onChange={(e) => setpassword(e.target.value)}
-                            />
-                            <label>Password</label>
+                                onChange={(e) => setPassword(e.target.value)}
+                            />                            
                         </div>
 
                         <button className='loginbutton' type="submit">Register</button>
-                        <div className="login-link">
-                            <p>Already have an account? <a href="#">Login</a></p>
+                        <div className="login-link" onClick={handleLogin}>
+                            <p>Already have an account?  
+                                <Link className='link'> Login</Link>
+                            </p>
                         </div>
                     </form>
                 </div>

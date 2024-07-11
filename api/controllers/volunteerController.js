@@ -5,7 +5,7 @@ const getVolunteers = (req, res) => {
 
   // Filter volunteers based on search term
   const filteredVolunteers = volunteers.filter(v =>
-    v.name.toLowerCase().includes(search.toLowerCase())
+    v.fullName.toLowerCase().includes(search.toLowerCase())
   );
 
   // Paginate the filtered results
@@ -16,6 +16,7 @@ const getVolunteers = (req, res) => {
     total: filteredVolunteers.length,
   });
 };
+
 
 module.exports = {
   getVolunteers,
