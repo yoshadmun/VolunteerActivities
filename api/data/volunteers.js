@@ -5,7 +5,9 @@ const volunteers = [
     fullName: 'John Doe',
     address: '456 Oak Street, Springfield, IL 62701',
     skills: ['Programming', 'Database Management', 'Problem Solving'],
-    availability: '2024-07-15'
+    availability: '2024-07-15',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 2,
@@ -13,7 +15,9 @@ const volunteers = [
     fullName: 'Jane Smith',
     address: '789 Pine Avenue, Anytown, CA 90210',
     skills: ['Marketing', 'Social Media Management', 'Customer Service'],
-    availability: '2024-07-16'
+    availability: '2024-07-16',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 3,
@@ -21,7 +25,9 @@ const volunteers = [
     fullName: 'Michael Johnson',
     address: '321 Cedar Road, Smalltown, NY 12345',
     skills: ['Graphic Design', 'Illustration', 'Adobe Creative Suite'],
-    availability: '2024-07-17'
+    availability: '2024-07-17',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 4,
@@ -29,7 +35,9 @@ const volunteers = [
     fullName: 'Emily Brown',
     address: '567 Elm Drive, Metro City, TX 54321',
     skills: ['Project Management', 'Team Leadership', 'Public Speaking'],
-    availability: '2024-07-18'
+    availability: '2024-07-18',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 5,
@@ -37,7 +45,9 @@ const volunteers = [
     fullName: 'Christopher Lee',
     address: '890 Maple Lane, Sunnyville, FL 67890',
     skills: ['Data Analysis', 'Statistical Modeling', 'Python Programming'],
-    availability: '2024-07-19'
+    availability: '2024-07-19',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 6,
@@ -45,7 +55,9 @@ const volunteers = [
     fullName: 'Sarah Taylor',
     address: '234 Birch Street, River City, WA 98765',
     skills: ['Content Writing', 'SEO Optimization', 'WordPress'],
-    availability: '2024-07-20'
+    availability: '2024-07-20',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 7,
@@ -53,7 +65,9 @@ const volunteers = [
     fullName: 'David Clark',
     address: '876 Pinecrest Avenue, Hilltop, CO 45678',
     skills: ['Financial Analysis', 'Excel Spreadsheets', 'Budget Management'],
-    availability: '2024-07-21'
+    availability: '2024-07-21',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 8,
@@ -61,7 +75,9 @@ const volunteers = [
     fullName: 'Jessica Martinez',
     address: '543 Oakwood Drive, Lakeview, AZ 34567',
     skills: ['Event Planning', 'Vendor Management', 'Negotiation'],
-    availability: '2024-07-22'
+    availability: '2024-07-22',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 9,
@@ -69,7 +85,9 @@ const volunteers = [
     fullName: 'Daniel Wilson',
     address: '987 Elmwood Court, Mountain Valley, NV 23456',
     skills: ['UX/UI Design', 'Prototyping', 'User Research'],
-    availability: '2024-07-23'
+    availability: '2024-07-23',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 10,
@@ -77,7 +95,9 @@ const volunteers = [
     fullName: 'Amanda Rodriguez',
     address: '210 Cedar Lane, Rivertown, MN 78901',
     skills: ['Customer Support', 'Technical Assistance', 'Problem Resolution'],
-    availability: '2024-07-24'
+    availability: '2024-07-24',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 11,
@@ -85,7 +105,9 @@ const volunteers = [
     fullName: 'Robert Moore',
     address: '654 Birchwood Avenue, Oceanview, GA 12345',
     skills: ['Software Development', 'Java Programming', 'Angular Framework'],
-    availability: '2024-07-25'
+    availability: '2024-07-25',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 12,
@@ -93,7 +115,9 @@ const volunteers = [
     fullName: 'Laura Davis',
     address: '876 Redwood Drive, Hillside, KY 56789',
     skills: ['Research Analysis', 'Report Writing', 'Data Visualization'],
-    availability: '2024-07-26'
+    availability: '2024-07-26',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 13,
@@ -101,7 +125,9 @@ const volunteers = [
     fullName: 'Kevin Garcia',
     address: '321 Pine Avenue, Lakeside, MI 45678',
     skills: ['Digital Marketing', 'Content Strategy', 'Social Media Advertising'],
-    availability: '2024-07-27'
+    availability: '2024-07-27',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 14,
@@ -109,7 +135,9 @@ const volunteers = [
     fullName: 'Melissa Hernandez',
     address: '789 Oak Lane, Woodland Hills, OR 89012',
     skills: ['Accounting', 'Bookkeeping', 'Financial Reporting'],
-    availability: '2024-07-28'
+    availability: '2024-07-28',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 15,
@@ -117,7 +145,9 @@ const volunteers = [
     fullName: 'William Thompson',
     address: '234 Cedar Street, Springdale, PA 56789',
     skills: ['Sales Management', 'Client Relations', 'Negotiation Skills'],
-    availability: '2024-07-29'
+    availability: '2024-07-29',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 16,
@@ -125,7 +155,9 @@ const volunteers = [
     fullName: 'Stephanie Lewis',
     address: '567 Birchwood Avenue, Sunnyside, TX 34567',
     skills: ['Human Resources', 'Recruitment', 'Employee Training'],
-    availability: '2024-07-30'
+    availability: '2024-07-30',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 17,
@@ -133,7 +165,9 @@ const volunteers = [
     fullName: 'Mark Young',
     address: '890 Pinecrest Drive, Hillview, CA 67890',
     skills: ['IT Support', 'Network Administration', 'Troubleshooting'],
-    availability: '2024-08-01'
+    availability: '2024-08-01',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 18,
@@ -141,7 +175,9 @@ const volunteers = [
     fullName: 'Christina Walker',
     address: '456 Maple Court, Riverside, FL 23456',
     skills: ['Project Coordination', 'Task Management', 'Resource Allocation'],
-    availability: '2024-08-02'
+    availability: '2024-08-02',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 19,
@@ -149,7 +185,9 @@ const volunteers = [
     fullName: 'Edward Perez',
     address: '210 Elm Street, Lakeside, WA 56789',
     skills: ['Legal Research', 'Case Management', 'Courtroom Litigation'],
-    availability: '2024-08-03'
+    availability: '2024-08-03',
+    assignedEvents:[],
+    completedEvents: []
   },
   {
     userId: 20,
@@ -157,7 +195,9 @@ const volunteers = [
     fullName: 'Nicole Scott',
     address: '876 Oakwood Lane, Riverdale, NY 89012',
     skills: ['Education Administration', 'Curriculum Development', 'Teacher Training'],
-    availability: '2024-08-04'
+    availability: '2024-08-04',
+    assignedEvents:[],
+    completedEvents: []
   }
   ];
   module.exports = volunteers;

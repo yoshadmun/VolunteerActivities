@@ -3,6 +3,7 @@ import Select from 'react-select';
 import Header from '../components/Header';
 import axios from 'axios';
 
+
 function VolunteerMatchingForm() {
   const [volunteers, setVolunteers] = useState([]);
   const [events, setEvents] = useState([]);
@@ -111,11 +112,18 @@ function VolunteerMatchingForm() {
   const handleSubmit = e => {
     e.preventDefault();
     const data = {
-      volunteer: selectedVolunteer,
-      event: selectedEvent
+      volunteerId: selectedVolunteer.id,
+      eventId: selectedEvent.id
     };
     console.log('Form submitted:', data);
     // Handle form submission logic here (e.g., send data to an API)
+    axios.post('http://localhost:3001/api/assignment', data)
+      .then(response =>{
+        console.log('Event assigned to volunteer successfully');
+      }) 
+      .catch(error =>{
+        console.log('Error assigning event to volunteer: ', error);
+      });
   };
 
   return (

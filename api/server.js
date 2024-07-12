@@ -8,6 +8,7 @@ const createUserProfileRoutes = require('./routes/createUserProfileRoutes');
 const matchingRoutes = require('./routes/matchingRoutes');
 const notificationRoutes = require('./routes/notificationRoutes'); 
 const volunteerHistoryRoutes = require('./routes/volunteerHistoryRoutes');
+const assignmentRoutes = require('./routes/assignmentRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -21,6 +22,7 @@ app.use('/api/user-profile', createUserProfileRoutes);
 app.use('/api/matching', matchingRoutes);
 app.use('/api/notifications', notificationRoutes); 
 app.use('/api/volunteerHistory', volunteerHistoryRoutes);
+app.use('/api/assignment', assignmentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
