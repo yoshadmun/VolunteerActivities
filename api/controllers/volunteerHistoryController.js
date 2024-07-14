@@ -2,7 +2,27 @@
 
 const volunteerHistory = require('../data/volunteerHistory');
 
-exports.getVolunteerHistory = (req, res) => {
+const getVolunteerHistory = (req, res) => {
+  const {volunteerId} = req.params;
+  const history = volunteerHistory.find(vh=>vh.volunteerId === volunteerId);
+  if(!history) {
+    return res.status(404).json({message:'No history found for this volunteer'});
+  }
+  res.json(history.events);
+}
+
+module.exports = {
+  getVolunteerHistory,
+}
+
+
+
+
+
+
+
+
+/*exports.getVolunteerHistory = (req, res) => {
   const volunteerId = parseInt(req.params.volunteerId);
   const history = volunteerHistory.filter(entry => entry.volunteerId === volunteerId);
   res.json(history);
@@ -33,4 +53,6 @@ exports.updateVolunteerHistory = (req, res) => {
   } else {
     res.status(404).json({ error: 'History entry not found' });
   }
-};
+};*/
+
+

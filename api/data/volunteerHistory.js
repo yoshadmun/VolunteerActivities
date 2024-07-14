@@ -1,26 +1,30 @@
-// data/volunteerHistory.js
-
 const volunteerHistory = [
-    {
-      id: 1,
-      volunteerId: 1,
-      eventId: 1,
-      participationDate: '2024-07-15',
-    },
-    {
-      id: 2,
-      volunteerId: 2,
-      eventId: 1,
-      participationDate: '2024-07-16',
-    },
-    {
-      id: 3,
-      volunteerId: 1,
-      eventId: 2,
-      participationDate: '2024-07-18',
-    },
-    // Add more entries as needed
-  ];
-  
-  module.exports = volunteerHistory;
-  
+  {
+    volunteerId: 'auth0|668f05afaddeb545a1f5e4ab',
+    events: [
+      {
+        eventId: 1,
+        eventName: 'Community Cleanup Drive',
+        location: '123 Main Street, Cityville, CA 90001',
+        date: '2024-08-15',
+        status: 'Completed'
+      },
+      {
+        eventId: 2,
+        eventName: 'Food Drive For Homeless',
+        location: '456 Elm Avenue, Smalltown, NY 12345',
+        date: '2024-08-20',
+        status: 'Completed'
+      },
+      {
+        eventId: 3,
+        eventName: 'Tech Workshop For Seniors',
+        location: '789 Oak Street, Sunnydale, TX 54321',
+        date: '2024-09-01',
+        status: 'Completed'
+      }
+    ]
+  }
+];
+
+module.exports = volunteerHistory;

@@ -1,60 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const VolunteerHistory = () => {
+    const [history, setHistory] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { user } = useAuth0();
+
+    useEffect(() => {
+        if (user && user.sub) {
+            const getHistory = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:3001/api/volunteerHistory/user/${user.sub}`);
+                    setHistory(Array.isArray(response.data) ? response.data : []);
+                } catch (e) {
+                    console.log('Error getting volunteer history: ', e);
+                    setHistory([]); // Set history to an empty array in case of error
+                } finally {
+                    setLoading(false);
+                }
+            };
+            getHistory();
+        }
+    }, [user]);
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+    
     return (
         <div className="container">
-            <Header/>
-            <div style={{display:'flex',justifyContent:'center',fontSize:'2rem',fontFamily:'monospace',padding:'2rem'}}>Volunteer History</div>
+            <Header />
+            <div style={{ display: 'flex', justifyContent: 'center', fontSize: '2rem', fontFamily: 'monospace', padding: '2rem' }}>Volunteer History</div>
             <table>
                 <thead>
                     <tr>
                         <th>Event Name</th>
-                        <th>Event Description</th>
                         <th>Location</th>
-                        <th>Required Skills</th>
-                        <th>Urgency</th>
                         <th>Event Date</th>
-                        <th>Participation Status</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Community Clean-Up</td>
-                        <td>Cleaning the neighborhood park and surrounding areas.</td>
-                        <td>Park Street, Springfield</td>
-                        <td>Cleaning, Organizing</td>
-                        <td>High</td>
-                        <td>June 25, 2024</td>
-                        <td>Participated</td>
-                    </tr>
-                    <tr>
-                        <td>Food Drive</td>
-                        <td>Collecting and distributing food to those in need.</td>
-                        <td>Main Street, Springfield</td>
-                        <td>Organizing, Communication</td>
-                        <td>Medium</td>
-                        <td>June 30, 2024</td>
-                        <td>Participated</td>
-                    </tr>
-                    <tr>
-                        <td>Health Awareness Camp</td>
-                        <td>Raising awareness about health and wellness.</td>
-                        <td>Central Park, Springfield</td>
-                        <td>Communication, Medical Assistance</td>
-                        <td>Low</td>
-                        <td>July 5, 2024</td>
-                        <td>Not Participated</td>
-                    </tr>
-                    <tr>
-                        <td>Health Awareness Camp</td>
-                        <td>Raising awareness about health and wellness.</td>
-                        <td>Central Park, Springfield</td>
-                        <td>Communication, Medical Assistance</td>
-                        <td>Low</td>
-                        <td>July 5, 2024</td>
-                        <td>Not Participated</td>
-                    </tr>
+                    {history.length === 0 ? (
+                        <tr>
+                            <td colSpan="4" style={{ textAlign: 'center' }}>No participation history available.</td>
+                        </tr>
+                    ) : (
+                        history.map((event, index) => (
+                            <tr key={index}>
+                                <td>{event.eventName}</td>
+                                <td>{event.location || 'N/A'}</td>
+                                <td>{event.date}</td>
+                                <td>{event.status}</td>
+                            </tr>
+                        ))
+                    )}
                 </tbody>
             </table>
         </div>
