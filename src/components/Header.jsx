@@ -48,7 +48,7 @@ function Header() {
               <>
                 <li className='headerLi'>
                   <button className='button'>
-                    <Link className='link' to='/notification'>Notification</Link>
+                    <Link className='link' to='/eventsforuser'>Events</Link>
                   </button>
                 </li>
                 <li className='headerLi'>

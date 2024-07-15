@@ -23,6 +23,6 @@ router.get('/',getNotifications);
 router.get('/user/:volunteerId', getNotificationsForUser);
 router.post('/assignment/:eventId',notifyEventAssignment);
 router.post('/update/:eventId', notifyEventUpdate);
-router.post('/reminder/:eventId', notifyEventReminder);
+router.post('/reminder/:volunteerId', notifyEventReminder);
 
 module.exports = router;

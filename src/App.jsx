@@ -11,6 +11,7 @@ import VolunteerHistory from './pages/VolunteerHistory';
 import Notifications from './pages/Notification';
 import User from './pages/User';
 import UserProfileForm from './pages/UserProfileForm';
+import FindEventForUser from './pages/FindEventsForUser';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/notification' element={<Notifications/>}/>
         <Route path='/user' element={<User/>}/>
         <Route path='userprofileform' element={<UserProfileForm/>}/>
+        <Route path="/eventsforuser" element={<FindEventForUser/>}/>
       </Routes>
     </Router>
   );

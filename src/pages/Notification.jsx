@@ -5,40 +5,42 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
-    const {user} = useAuth0();
+    const { user } = useAuth0();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if(user && user.sub){
-            console.log(`${user.sub}`);
-            const getNoti = async() => {
-                try{
+        if (user && user.sub) {
+            const fetchNotifications = async () => {
+                try {
+                    // Check and send reminders
+                    await axios.post(`http://localhost:3001/api/notifications/reminder/${user.sub}`);
+                    // Fetch all notifications
                     const response = await axios.get(`http://localhost:3001/api/notifications/user/${user.sub}`);
                     setNotifications(response.data);
-                } catch(error){
-                    console.log('Error getting notifications: ', error.data);
+                } catch (error) {
+                    console.log('Error getting notifications: ', error);
                 } finally {
                     setLoading(false);
                 }
             };
-            getNoti();
+            fetchNotifications();
         }
     }, [user]);
 
     const checkNotifications = (type) => {
         if (!Array.isArray(notifications)) {
             return <li>Error loading notifications</li>;
-          }
-        const filterNotifications = notifications.filter(notification => notification.type === type);
-        if(filterNotifications.length === 0){
+        }
+        const filteredNotifications = notifications.filter(notification => notification.type === type);
+        if (filteredNotifications.length === 0) {
             return <li>No new {type} notifications</li>;
         }
-        return filterNotifications.map((notification, index)=>(
+        return filteredNotifications.map((notification, index) => (
             <li key={index}>{notification.message}</li>
         ));
     };
 
-    if(loading){
+    if (loading) {
         return <div>Loading...</div>;
     }
 
@@ -51,7 +53,6 @@ const Notifications = () => {
                     <h2>New Event Assignments</h2>
                     <ul className="notification-list">
                         {checkNotifications('assignment')}
-                        {/* New Events will be dynamically populated here using JavaScript Backend */}
                     </ul>
                 </section>
 
@@ -59,7 +60,6 @@ const Notifications = () => {
                     <h2>Event Updates</h2>
                     <ul className="notification-list">
                         {checkNotifications('update')}
-                        {/* Event Updates will be dynamically populated here using JavaScript Backend */}
                     </ul>
                 </section>
 
@@ -67,7 +67,6 @@ const Notifications = () => {
                     <h2>Reminders</h2>
                     <ul className="notification-list">
                         {checkNotifications('reminder')}
-                        {/* Reminders will be dynamically populated here using JavaScript Backend */}
                     </ul>
                 </section>
             </div>

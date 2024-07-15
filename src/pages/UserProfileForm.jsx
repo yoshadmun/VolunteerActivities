@@ -48,9 +48,35 @@ const UserProfileForm = () => {
   }
 
   const options = [
-    { value: 'css', label: 'CSS' },
-    { value: 'html', label: 'HTML' },
-    { value: 'c++', label: 'C++' }
+    { value: 'Cleaning', label: 'Cleaning' },
+    { value: 'Organizing', label: 'Organizing' },
+    { value: 'Teamwork', label: 'Teamwork' },
+    { value: 'Food Preparation', label: 'Food Preparation' },
+    { value: 'Logistics', label: 'Logistics' },
+    { value: 'Communication', label: 'Communication' },
+    { value: 'Tech Support', label: 'Tech Support' },
+    { value: 'Patience', label: 'Patience' },
+    { value: 'Teaching', label: 'Teaching' },
+    { value: 'Public Speaking', label: 'Public Speaking' },
+    { value: 'Research', label: 'Research' },
+    { value: 'Environmental Knowledge', label: 'Environmental Knowledge' },
+    { value: 'Sports Coaching', label: 'Sports Coaching' },
+    { value: 'Event Coordination', label: 'Event Coordination' },
+    { value: 'Team Leadership', label: 'Team Leadership' },
+    { value: 'Art Instruction', label: 'Art Instruction' },
+    { value: 'Creativity', label: 'Creativity' },
+    { value: 'Childcare', label: 'Childcare' },
+    { value: 'Medical Assistance', label: 'Medical Assistance' },
+    { value: 'Health Education', label: 'Health Education' },
+    { value: 'First Aid', label: 'First Aid' },
+    { value: 'STEM Teaching', label: 'STEM Teaching' },
+    { value: 'Technology', label: 'Technology' },
+    { value: 'Engineering', label: 'Engineering' },
+    { value: 'Event Planning', label: 'Event Planning' },
+    { value: 'Animal Care', label: 'Animal Care' },
+    { value: 'Fundraising', label: 'Fundraising' },
+    { value: 'Counseling', label: 'Counseling' },
+    { value: 'Empathy', label: 'Empathy' }
   ];
 
   const states = [
@@ -91,6 +117,8 @@ const UserProfileForm = () => {
         },
       skills: formData.skills.map(skill => skill.value),
       availability: formData.availability,
+      assignedEvents: [],
+      completedEvents: [],
       }
     };
     console.log('Sending event data: ', formattedData)

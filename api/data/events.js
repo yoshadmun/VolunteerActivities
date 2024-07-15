@@ -4,7 +4,7 @@ const events = [
     eventName: 'Community Cleanup Drive',
     requiredSkills: ['Cleaning', 'Organizing', 'Teamwork'],
     location: '123 Main Street, Cityville, CA 90001',
-    date: '2024-08-15',
+    date: '2024-07-13',
     assignedVolunteers: []
   },
   {
@@ -12,7 +12,7 @@ const events = [
     eventName: 'Food Drive for Homeless Shelter',
     requiredSkills: ['Food Preparation', 'Logistics', 'Communication'],
     location: '456 Elm Avenue, Smalltown, NY 12345',
-    date: '2024-08-20',
+    date: '2024-07-14',
     assignedVolunteers: []
   },
   {
