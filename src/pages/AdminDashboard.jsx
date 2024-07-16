@@ -13,7 +13,7 @@ function AdminDashboard() {
           <Link to="/eventform" className="dashboard-link">Manage Events</Link>
           <Link to="/matching" className="dashboard-link">Match Volunteers</Link>
           <Link to="/profile" className="dashboard-link">View Volunteer Profiles</Link>
-          <Link to="/volunteerhistory" className="dashboard-link">Track Volunteer Participation</Link>
+          <Link to="/viewevents" className="dashboard-link">View Events</Link>
         </div>
       </div>
     </div>

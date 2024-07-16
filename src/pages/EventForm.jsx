@@ -45,11 +45,13 @@ function EventForm() {
         streetAddress: eventData.location.streetAddress,
         city: eventData.location.city,
         state: eventData.location.state,
-        zipcode: eventData.location.zipcode,
+        zipCode: eventData.location.zipcode,
       },
       requiredSkills: eventData.requiredSkills.map(skill => skill.value),
       urgency: eventData.urgency.value,
-      date: eventData.eventDate.toISOString(),
+      date: eventData.eventDate.toISOString().split('T')[0], // Extract only the date part
+      assignedVolunteers: [],
+      active: true,
     };
     console.log('Sending event data: ', formattedData)
     axios.post('http://localhost:3001/api/events', formattedData)
@@ -63,9 +65,35 @@ function EventForm() {
   };
 
   const options = [
-    { value: 'css', label: 'CSS' },
-    { value: 'html', label: 'HTML' },
-    { value: 'c++', label: 'C++' }
+    { value: 'Cleaning', label: 'Cleaning' },
+    { value: 'Organizing', label: 'Organizing' },
+    { value: 'Teamwork', label: 'Teamwork' },
+    { value: 'Food Preparation', label: 'Food Preparation' },
+    { value: 'Logistics', label: 'Logistics' },
+    { value: 'Communication', label: 'Communication' },
+    { value: 'Tech Support', label: 'Tech Support' },
+    { value: 'Patience', label: 'Patience' },
+    { value: 'Teaching', label: 'Teaching' },
+    { value: 'Public Speaking', label: 'Public Speaking' },
+    { value: 'Research', label: 'Research' },
+    { value: 'Environmental Knowledge', label: 'Environmental Knowledge' },
+    { value: 'Sports Coaching', label: 'Sports Coaching' },
+    { value: 'Event Coordination', label: 'Event Coordination' },
+    { value: 'Team Leadership', label: 'Team Leadership' },
+    { value: 'Art Instruction', label: 'Art Instruction' },
+    { value: 'Creativity', label: 'Creativity' },
+    { value: 'Childcare', label: 'Childcare' },
+    { value: 'Medical Assistance', label: 'Medical Assistance' },
+    { value: 'Health Education', label: 'Health Education' },
+    { value: 'First Aid', label: 'First Aid' },
+    { value: 'STEM Teaching', label: 'STEM Teaching' },
+    { value: 'Technology', label: 'Technology' },
+    { value: 'Engineering', label: 'Engineering' },
+    { value: 'Event Planning', label: 'Event Planning' },
+    { value: 'Animal Care', label: 'Animal Care' },
+    { value: 'Fundraising', label: 'Fundraising' },
+    { value: 'Counseling', label: 'Counseling' },
+    { value: 'Empathy', label: 'Empathy' }
   ];
 
   const urgencyOptions = [

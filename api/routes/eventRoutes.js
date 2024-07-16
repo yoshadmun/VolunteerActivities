@@ -4,7 +4,8 @@ const { getEvents,
         getAssignedEvents, 
         getEventById,
         completeEvent,
-        getCompletedEvents} = require('../controllers/eventController');
+        getCompletedEvents,
+        removeEvent} = require('../controllers/eventController');
 const {eventValidation, validate} = require('../middleware/validation');
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.get('/getevents/:volunteerId', getAssignedEvents);
 router.get('/geteventbyid/:eventId', getEventById);
 router.post('/complete', completeEvent);
 router.get('/getcompletedevents/:volunteerId', getCompletedEvents);
+router.put('/remove/:eventId/active', removeEvent);
 
 module.exports = router;

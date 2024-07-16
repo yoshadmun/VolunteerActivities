@@ -202,6 +202,7 @@ function VolunteerMatchingForm() {
                 onChange={handleEventChange}
                 value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.eventName } : null}
                 placeholder="Select event..."
+                required
               />
             </div>
             <div className="pagination">

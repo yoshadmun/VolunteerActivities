@@ -7,7 +7,8 @@ const volunteers = [
     skills: ['Programming', 'Database Management', 'Problem Solving'],
     availability: '2024-07-15',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 2,
@@ -17,7 +18,8 @@ const volunteers = [
     skills: ['Marketing', 'Social Media Management', 'Customer Service'],
     availability: '2024-07-16',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 3,
@@ -27,7 +29,8 @@ const volunteers = [
     skills: ['Graphic Design', 'Illustration', 'Adobe Creative Suite'],
     availability: '2024-07-17',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 4,
@@ -37,7 +40,8 @@ const volunteers = [
     skills: ['Project Management', 'Team Leadership', 'Public Speaking'],
     availability: '2024-07-18',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 5,
@@ -47,7 +51,8 @@ const volunteers = [
     skills: ['Data Analysis', 'Statistical Modeling', 'Python Programming'],
     availability: '2024-07-19',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 6,
@@ -57,7 +62,8 @@ const volunteers = [
     skills: ['Content Writing', 'SEO Optimization', 'WordPress'],
     availability: '2024-07-20',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 7,
@@ -67,7 +73,8 @@ const volunteers = [
     skills: ['Financial Analysis', 'Excel Spreadsheets', 'Budget Management'],
     availability: '2024-07-21',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 8,
@@ -77,7 +84,8 @@ const volunteers = [
     skills: ['Event Planning', 'Vendor Management', 'Negotiation'],
     availability: '2024-07-22',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 9,
@@ -87,7 +95,8 @@ const volunteers = [
     skills: ['UX/UI Design', 'Prototyping', 'User Research'],
     availability: '2024-07-23',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 10,
@@ -97,7 +106,8 @@ const volunteers = [
     skills: ['Customer Support', 'Technical Assistance', 'Problem Resolution'],
     availability: '2024-07-24',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 11,
@@ -107,7 +117,8 @@ const volunteers = [
     skills: ['Software Development', 'Java Programming', 'Angular Framework'],
     availability: '2024-07-25',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 12,
@@ -117,7 +128,8 @@ const volunteers = [
     skills: ['Research Analysis', 'Report Writing', 'Data Visualization'],
     availability: '2024-07-26',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 13,
@@ -127,7 +139,8 @@ const volunteers = [
     skills: ['Digital Marketing', 'Content Strategy', 'Social Media Advertising'],
     availability: '2024-07-27',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 14,
@@ -137,7 +150,8 @@ const volunteers = [
     skills: ['Accounting', 'Bookkeeping', 'Financial Reporting'],
     availability: '2024-07-28',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 15,
@@ -147,7 +161,8 @@ const volunteers = [
     skills: ['Sales Management', 'Client Relations', 'Negotiation Skills'],
     availability: '2024-07-29',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 16,
@@ -157,7 +172,8 @@ const volunteers = [
     skills: ['Human Resources', 'Recruitment', 'Employee Training'],
     availability: '2024-07-30',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 17,
@@ -167,7 +183,8 @@ const volunteers = [
     skills: ['IT Support', 'Network Administration', 'Troubleshooting'],
     availability: '2024-08-01',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 18,
@@ -177,7 +194,8 @@ const volunteers = [
     skills: ['Project Coordination', 'Task Management', 'Resource Allocation'],
     availability: '2024-08-02',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 19,
@@ -187,7 +205,8 @@ const volunteers = [
     skills: ['Legal Research', 'Case Management', 'Courtroom Litigation'],
     availability: '2024-08-03',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
   },
   {
     userId: 20,
@@ -196,8 +215,119 @@ const volunteers = [
     address: '876 Oakwood Lane, Riverdale, NY 89012',
     skills: ['Education Administration', 'Curriculum Development', 'Teacher Training'],
     availability: '2024-08-04',
+    assignedEvents:[1,2],
+    completedEvents: [3,4],
+    active: true,
+  },
+  {
+    userId: 21,
+    id: 21,
+    fullName: 'Michael Johnson',
+    address: '234 Cedar Street, Hilltop, CA 56789',
+    skills: ['Software Development', 'Database Management', 'Web Design'],
+    availability: '2024-08-10',
     assignedEvents:[],
-    completedEvents: []
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 22,
+    id: 22,
+    fullName: 'Emily Davis',
+    address: '345 Pine Avenue, Lakeside, TX 34567',
+    skills: ['Marketing', 'Social Media Management', 'Content Creation'],
+    availability: '2024-08-12',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 23,
+    id: 23,
+    fullName: 'Christopher Martinez',
+    address: '456 Elm Drive, Smalltown, WA 12345',
+    skills: ['Graphic Design', 'Illustration', 'Digital Art'],
+    availability: '2024-08-15',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 24,
+    id: 24,
+    fullName: 'Jessica Roberts',
+    address: '567 Maple Road, Riverside, OR 67890',
+    skills: ['Event Planning', 'Logistics', 'Project Management'],
+    availability: '2024-08-18',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 25,
+    id: 25,
+    fullName: 'David Thompson',
+    address: '678 Oak Lane, Springdale, PA 45678',
+    skills: ['Data Analysis', 'Statistics', 'Machine Learning'],
+    availability: '2024-08-20',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 26,
+    id: 26,
+    fullName: 'Sarah Adams',
+    address: '789 Cedar Drive, Rivertown, MN 56789',
+    skills: ['Public Relations', 'Corporate Communications', 'Media Relations'],
+    availability: '2024-08-25',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 27,
+    id: 27,
+    fullName: 'Kevin Walker',
+    address: '890 Pinecrest Road, Oceanview, GA 23456',
+    skills: ['Customer Support', 'Technical Writing', 'Problem Solving'],
+    availability: '2024-08-28',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
+  },
+  {
+    userId: 28,
+    id: 28,
+    fullName: 'Michelle Young',
+    address: '901 Elm Street, Cityville, CA 34567',
+    skills: ['Financial Analysis', 'Accounting', 'Budget Management'],
+    availability: '2024-09-02',
+    assignedEvents:[],
+    completedEvents: [],
+    active: false,
+  },
+  {
+    userId: 29,
+    id: 29,
+    fullName: 'Brian Clark',
+    address: '123 Oakwood Avenue, Woodland Hills, OR 89012',
+    skills: ['Legal Research', 'Contract Law', 'Litigation'],
+    availability: '2024-09-05',
+    assignedEvents:[],
+    completedEvents: [],
+    active: false,
+  },
+  {
+    userId: 30,
+    id: 30,
+    fullName: 'Amanda Baker',
+    address: '234 Cedar Lane, Hilltop, CO 45678',
+    skills: ['Human Resources', 'Employee Relations', 'Recruitment'],
+    availability: '2024-09-08',
+    assignedEvents:[],
+    completedEvents: [],
+    active: true,
   }
   ];
   module.exports = volunteers;

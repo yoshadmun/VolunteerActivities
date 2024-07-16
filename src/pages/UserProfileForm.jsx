@@ -119,6 +119,7 @@ const UserProfileForm = () => {
       availability: formData.availability,
       assignedEvents: [],
       completedEvents: [],
+      active: true,
       }
     };
     console.log('Sending event data: ', formattedData)

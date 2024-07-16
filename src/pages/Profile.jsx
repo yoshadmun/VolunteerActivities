@@ -27,6 +27,15 @@ function ViewVolunteerProfiles() {
     setSelectedVolunteer(volunteer);
   };
 
+  const handleRemoveVolunteer = async (userId) =>{
+    try{
+      await axios.put(`http://localhost:3001/api/volunteers/remove/${userId}/active`,{active:false});
+      setVolunteers(volunteers.filter(v => v.userId !== userId)); // Remove from the current list in state
+    } catch (error) {
+      console.error('Error removing volunteer:', error);
+    }
+  };
+
   return (
     <div className="container">
       <Header />
@@ -55,6 +64,9 @@ function ViewVolunteerProfiles() {
               <tr>
                 <th>Name</th>
                 <th>Skills</th>
+                <th>Assigned Events</th>
+                <th>Completed Events</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -62,6 +74,23 @@ function ViewVolunteerProfiles() {
                 <tr key={volunteer.id}>
                   <td>{volunteer.fullName}</td>
                   <td>{volunteer.skills.join(', ')}</td>
+                  <td>
+                    {volunteer.assignedEvents.length > 0 ? (
+                      volunteer.assignedEvents.map(event => event.eventName).join(', ')
+                    ) : (
+                      <span style={{ color: 'gray' }}>Nothing</span>
+                    )}
+                  </td>
+                  <td>
+                    {volunteer.completedEvents.length > 0 ? (
+                      volunteer.completedEvents.map(event => event.eventName).join(', ')
+                    ) : (
+                      <span style={{ color: 'gray' }}>Nothing</span>
+                    )}
+                  </td>
+                  <td>
+                    <button onClick={() => handleRemoveVolunteer(volunteer.userId)}>Remove</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -69,7 +98,10 @@ function ViewVolunteerProfiles() {
         </div>
         <div className="pagination" style={{padding:'1rem'}}>
           <button disabled={volunteerPage === 1} onClick={() => setVolunteerPage(volunteerPage - 1)}>Previous</button>
-          <span>Page {volunteerPage} of {Math.ceil(volunteerTotal / pageSize)}</span>
+          <span>{volunteers.length === 0
+                      ? "Page 0 of 0"
+                    : `Page ${volunteerPage} of ${Math.ceil(volunteerTotal / pageSize)}`}
+          </span>
           <button disabled={volunteerPage === Math.ceil(volunteerTotal / pageSize)} onClick={() => setVolunteerPage(volunteerPage + 1)}>Next</button>
         </div>
       </div>

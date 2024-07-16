@@ -29,11 +29,18 @@ function Header() {
               </button>
             </li>
             {isAdmin && (
-              <li className='headerLi'>
-                <button className='button'>
-                  <Link className='link' to='/admindashboard'>Admin</Link>
-                </button>
-              </li>
+              <>
+                <li className='headerLi'>
+                  <button className='button'>
+                    <Link className='link' to='/admindashboard'>Admin</Link>
+                  </button>
+                </li>
+                <li className='headerLi'>
+                  <button className='button' onClick={() => logout({returnTo: window.location.origin})}>
+                    <Link className='link' to='/'>Log out</Link>
+                  </button>
+                </li>
+              </>
             )}
             {!isAuthenticated && (
               <>
@@ -44,7 +51,7 @@ function Header() {
                 </li>
               </>
             )}
-            {isAuthenticated && (
+            {isAuthenticated && !isAdmin && (
               <>
                 <li className='headerLi'>
                   <button className='button'>

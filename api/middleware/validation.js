@@ -7,7 +7,7 @@ const eventValidation = () => [
     body('location.streetAddress').isString().notEmpty(),
     body('location.city').isString().notEmpty(),
     body('location.state').isString().notEmpty(),
-    body('location.zipcode').isPostalCode('US').notEmpty(),
+    body('location.zipCode').isPostalCode('US').notEmpty(),
     body('requiredSkills').isArray().notEmpty(),
     body('urgency').isString().notEmpty(),
     body('date').isISO8601().notEmpty(),
