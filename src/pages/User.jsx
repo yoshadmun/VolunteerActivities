@@ -108,6 +108,10 @@ const User = () => {
     return eventDay < today;
   };
 
+  const formatLocation = (location) => {
+    return `${location.streetAddress}, ${location.city}, ${location.state} ${location.zipCode}`;
+  };
+
   return (
     <div className="container">
       <Header />
@@ -131,7 +135,7 @@ const User = () => {
           {assignedEvents.map((event) => (
             <div key={event.id} className="event-card">
               <h3 style={{ textAlign: 'center' }}>{event.eventName}</h3>
-              <p>{event.location}</p>
+              <p>{formatLocation(event.location)}</p>
               <p><strong>Date:</strong> {event.date}</p>
               <button
                 onClick={() => handleCompleteEvent(event.id)}
@@ -149,7 +153,7 @@ const User = () => {
             {completedEvents.map(event => (
               <li key={event.id} className="event-card">
                 <h3 style={{ textAlign: 'center' }}>{event.eventName}</h3>
-                <p>{event.location}</p>
+                <p>{formatLocation(event.location)}</p>
                 <p><strong>Date:</strong> {event.date}</p>
               </li>
             ))}

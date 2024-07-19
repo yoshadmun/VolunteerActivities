@@ -8,6 +8,7 @@ const MatchedEvents = () => {
   const [assignedEvents, setAssignedEvents] = useState(new Set());
   const { user } = useAuth0();
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (user && user.sub) {
@@ -44,11 +45,21 @@ const MatchedEvents = () => {
       });
       setAssignedEvents((prevAssignedEvents) => new Set(prevAssignedEvents).add(event.id));
       console.log(`Successfully assigned to event: ${event.eventName}`);
+
+      await axios.post(`http://localhost:3001/api/notifications/assignment`,{
+        eventId: event.id,
+      });
+      setMessage('Event assigned and notification sent successfully');
     } catch (error) {
       console.log('Error assigning to event: ', error);
+      setMessage('Failed to assign event or send notification.');
       alert('Error assigning to event');
     }
   };
+  const formatLocation = (location) => {
+    return `${location.streetAddress}, ${location.city}, ${location.state} ${location.zipCode}`;
+  };
+  
 
   if (loading) {
     return <div>Loading...</div>;
@@ -76,7 +87,7 @@ const MatchedEvents = () => {
             matchedEvents.slice(0, 10).map((event, index) => (
               <tr key={index}>
                 <td>{event.eventName}</td>
-                <td>{event.location}</td>
+                <td>{formatLocation(event.location)}</td>
                 <td>{event.date}</td>
                 <td>
                   {assignedEvents.has(event.id) ? (
@@ -90,6 +101,7 @@ const MatchedEvents = () => {
           )}
         </tbody>
       </table>
+      {message && <div style={{ marginTop: '1rem', fontSize: '1.2rem', color: 'green' }}>{message}</div>}
     </div>
   );
 };

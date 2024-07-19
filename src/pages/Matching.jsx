@@ -20,6 +20,7 @@ function VolunteerMatchingForm() {
   const [eventTotal, setEventTotal] = useState(0);
   const [matchedEventPage, setMatchedEventPage] = useState(1);
   const [matchedVolunteerPage, setMatchedVolunteerPage] = useState(1);
+  const [message, setMessage] = useState('');
 
   const pageSize = 10; // Items per page
 
@@ -109,21 +110,26 @@ function VolunteerMatchingForm() {
     setMatchedVolunteers([]); // Clear matched volunteers
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      volunteerId: selectedVolunteer.id,
+      volunteerId: selectedVolunteer.userId,
       eventId: selectedEvent.id
     };
     console.log('Form submitted:', data);
-    // Handle form submission logic here (e.g., send data to an API)
-    axios.post('http://localhost:3001/api/assignment', data)
-      .then(response =>{
-        console.log('Event assigned to volunteer successfully');
-      }) 
-      .catch(error =>{
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/assignment', data);
+      console.log('Event assigned to volunteer successfully');
+      setMessage('Event assigned to volunteer and notification sent successfully');
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setMessage('Volunteer is already assigned to this event');
+      } else {
+        setMessage('Error assigning event to volunteer');
         console.log('Error assigning event to volunteer: ', error);
-      });
+      }
+    }
   };
 
   return (
@@ -240,6 +246,7 @@ function VolunteerMatchingForm() {
           </button>
         </div>
       </form>
+      {message && <div style={{ marginTop: '1rem', fontSize: '1.2rem', color: 'green' }}>{message}</div>}
     </div>
   );
 }

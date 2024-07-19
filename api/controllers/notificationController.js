@@ -35,7 +35,8 @@ exports.markAsRead = (req, res) => {
 const sendNotification = (volunteerId, message, type) => {
   const volunteer = volunteers.find(v=>v.userId === volunteerId);
   if(volunteer){
-    const notification = {volunteerId, message, type, date: new Date()};
+    const newId = notifications.length > 0 ? Math.max(...notifications.map(n => n.id)) + 1 : 1;
+    const notification = {id: newId, volunteerId, message, type, date: new Date()};
     notifications.push(notification);
     console.log(`Notification sent to ${volunteer.fullName}: ${message}`);
   } else{
@@ -55,7 +56,7 @@ const isEventInNextThreeDays = (eventDate) => {
 };
 
 const notifyEventAssignment = (req,res) =>{
-  const {eventId} = req.params;
+  const {eventId} = req.body;
   const event = events.find(e => e.id === eventId);
   if(event){
     event.assignedVolunteers.forEach(volunteerId => {
@@ -68,7 +69,7 @@ const notifyEventAssignment = (req,res) =>{
   }
 };
 
-const notifyEventUpdate = (req,res) => {
+/*const notifyEventUpdate = (req,res) => {
   const {eventId} = req.params;
   const event = events.find(e=>e.id === eventId);
   if(event){
@@ -80,21 +81,25 @@ const notifyEventUpdate = (req,res) => {
   } else{
     res.status(404).json({message:'Event not found'});
   }
-};
-
-/*const notifyEventReminder = (req,res) => {
-  const {eventId} = req.params;
-  const event = events.find(e=>e.id === eventId);
-  if(event){
-    event.assignedVolunteers.forEach(volunteerId => {
-      const message = `Reminder: The event ${event.eventName} is happening on ${event.date}`;
-      sendNotification(volunteerId, message, 'reminder');
-    });
-    res.status(200).json({message: 'Reminder notification sent'});
-  } else{
-    res.status(404).json({message:'Event not found'});
-  }
 };*/
+
+const notifyEventUpdate = (req, res) => {
+  const {eventId} = req.params;
+
+  const event = events.find(e => e.id.toString() === eventId);
+  if(!event){
+    return res.status(404).json({message:'Event not found'});
+  } 
+
+  event.assignedVolunteers.forEach(volunteerId => {
+    const volunteer = volunteers.find(v => v.userId === volunteerId);
+    if(volunteer){
+      const message = `Update: The event ${event.eventName} scheduled on ${event.date} has been cancelled`;
+      sendNotification(volunteer.userId, message, 'update');
+    }
+  });
+  res.status(200).json({message:'Update notifications sent for cancelled event'});
+}
 
 const notifyEventReminder = (req, res) => {
   const { volunteerId } = req.params;
@@ -119,6 +124,17 @@ const notifyEventReminder = (req, res) => {
   res.status(200).json({ message: 'Event reminder notification sent', reminders });
 };
 
+const removeNotification = (req, res) => {
+  const {notiId} = req.params;
+  const index = notifications.findIndex(n => n.id.toString() === notiId);
+
+  if(index === -1){
+    return res.status(404).json({message:'Notification not found'});
+  } 
+  notifications.splice(index,1);
+  res.status(200).json({message:'Notification deleted successfully'});
+};
+
 const getNotifications = (req,res) =>{
   res.json(notifications);
 }
@@ -136,4 +152,5 @@ module.exports = {
   notifyEventReminder,
   getNotifications,
   getNotificationsForUser,
+  removeNotification,
 };

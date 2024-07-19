@@ -19,11 +19,14 @@ function ViewEvents() {
       .catch(error => {
         console.error('Error fetching events:', error);
       });
-  }, [eventSearch, eventPage]);
+  }, [eventSearch, eventPage, events]);
 
   const handleRemoveEvent = async (eventId) => {
     try {
+      //set event to inactive
       await axios.put(`http://localhost:3001/api/events/remove/${eventId}/active`, { active: false });
+      //send update notification to assignedVolunteers for that event
+      await axios.post(`http://localhost:3001/api/notifications/update/${eventId}`);
       setEvents(events.filter(e => e.id !== eventId)); // Remove from the current list in state
     } catch (error) {
       console.error('Error removing event:', error);

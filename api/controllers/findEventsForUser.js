@@ -15,7 +15,8 @@ const getEventsMatchingSkills = (req, res) => {
     return(
       event.requiredSkills.some(skill => volunteer.skills.includes(skill)) &&
       eventDate >= volunteerAvailability &&
-      !volunteer.completedEvents.includes(event.id)
+      !volunteer.completedEvents.includes(event.id) &&
+      event.active
     );
   });
 
@@ -37,13 +38,17 @@ const assignVolunteerToEvent = (req, res) => {
   }
   if (!event.assignedVolunteers.includes(volunteer.userId)) {
     event.assignedVolunteers.push(volunteer.userId);
-  }
+  } else{
+    return res.status(400).json({message: 'Volunteer is already assigned to event'});
+  } 
 
   if (!volunteer.assignedEvents) {
     volunteer.assignedEvents = [];
   }
   if (!volunteer.assignedEvents.includes(event.id)) {
     volunteer.assignedEvents.push(event.id);
+  } else{
+    return res.status(400).json({message: 'Event has been already assigned to volunteer'});
   }
 
   res.status(200).json({ message: 'Volunteer assigned to event successfully' });
