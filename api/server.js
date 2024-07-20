@@ -2,8 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const cron = require('node-cron');
-const {notifyEventReminder} = require('../api/controllers/notificationController');
 const eventRoutes = require('./routes/eventRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const createUserProfileRoutes = require('./routes/createUserProfileRoutes');
@@ -30,14 +28,6 @@ app.use('/api/assignment', assignmentRoutes);
 app.use('/api/eventsforuser', findEventsForUserRoutes);
 app.use('/api/assigned-events',getAssignedEventsRoutes);
 
-cron.schedule('0 0 * * *', () => {
-    events.forEach(event => {
-      notifyEventReminder({ params: { eventId: event.id } }, {
-        status: () => ({ json: console.log }),
-        json: console.log,
-      });
-    });
-  });
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

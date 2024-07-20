@@ -57,11 +57,11 @@ const completeEvent = (req,res) => {
   const {userId, eventId} = req.body;
   const volunteer = volunteers.find(v => v.userId.toString() === userId);
   if(!volunteer){
-    return res.status(404).json({message:'Volunteer not found'});
+    return res.status(401).json({message:'Volunteer not found'});
   }
   const eventIndex = volunteer.assignedEvents.findIndex(e => e === eventId);
   if (eventIndex === -1){
-    return res.status(404).json({message: 'Event not found in assigned events'});
+    return res.status(400).json({message: 'Event not found in assigned events'});
   }
   const completedEvent = volunteer.assignedEvents.splice(eventIndex,1)[0];
   volunteer.completedEvents.push(completedEvent);

@@ -9,9 +9,9 @@ const events = [
       state: 'CA',
       zipCode: '90001'
     },
-    date: '2024-07-13',
+    date: '2024-07-20',
     assignedVolunteers: [],
-    active: false,
+    active: true,
   },
   {
     id: 2,
@@ -23,9 +23,9 @@ const events = [
       state: 'NY',
       zipCode: '12345'
     },
-    date: '2024-07-14',
+    date: '2024-08-20',
     assignedVolunteers: [],
-    active: false,
+    active: true,
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const events = [
     },
     date: '2024-08-25',
     assignedVolunteers: [],
-    active: false,
+    active: true,
   },
   {
     id: 4,
@@ -93,7 +93,7 @@ const events = [
       state: 'OR',
       zipCode: '89012'
     },
-    date: '2024-09-20',
+    date: '2024-07-19',
     assignedVolunteers: [],
     active: true,
   },
