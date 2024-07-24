@@ -4,10 +4,11 @@ import Header from '../components/Header';
 import Select from 'react-select';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
-
+import { useNavigate } from 'react-router-dom';
 
 const UserProfileForm = () => {
   const {user} = useAuth0();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     location:{
@@ -117,8 +118,6 @@ const UserProfileForm = () => {
         },
       skills: formData.skills.map(skill => skill.value),
       availability: formData.availability,
-      assignedEvents: [],
-      completedEvents: [],
       active: true,
       }
     };
@@ -127,6 +126,7 @@ const UserProfileForm = () => {
     .then(response => {
       console.log('Profile created: ', response.data);
       handleReset();
+      navigate('/user');
     })
     .catch(error=>{
       console.error('There was an error creating the profile!', error);

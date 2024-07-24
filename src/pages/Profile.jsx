@@ -22,10 +22,10 @@ function ViewVolunteerProfiles() {
       });
   }, [volunteerSearch, volunteerPage]);
 
-  const handleVolunteerChange = selectedOption => {
+  /*const handleVolunteerChange = selectedOption => {
     const volunteer = volunteers.find(v => v.id === selectedOption.value);
     setSelectedVolunteer(volunteer);
-  };
+  };*/
 
   const handleRemoveVolunteer = async (userId) =>{
     try{
@@ -71,7 +71,7 @@ function ViewVolunteerProfiles() {
             </thead>
             <tbody>
               {volunteers.map(volunteer => (
-                <tr key={volunteer.id}>
+                <tr key={volunteer._id}>
                   <td>{volunteer.fullName}</td>
                   <td>{volunteer.skills.join(', ')}</td>
                   <td>

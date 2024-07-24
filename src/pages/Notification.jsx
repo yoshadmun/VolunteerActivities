@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Header from '../components/Header';
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -11,10 +11,13 @@ const Notifications = () => {
     const { user } = useAuth0();
     const [loading, setLoading] = useState(true);
     const pageSize = 5; // Number of notifications per page
+    const isFetching = useRef(false);
 
     useEffect(() => {
         if (user && user.sub) {
             const fetchNotifications = async () => {
+                if (isFetching.current) return;
+                isFetching.current = true;
                 try {
                     // Check and send reminders
                     await axios.post(`http://localhost:3001/api/notifications/reminder/${user.sub}`);
@@ -25,6 +28,7 @@ const Notifications = () => {
                     console.log('Error getting notifications: ', error);
                 } finally {
                     setLoading(false);
+                    isFetching.current = false;
                 }
             };
             fetchNotifications();
@@ -41,7 +45,7 @@ const Notifications = () => {
     const handleDeleteNotification = async (notiId) => {
         try {
             await axios.delete(`http://localhost:3001/api/notifications/delete/${notiId}`);
-            setNotifications(notifications.filter(notification => notification.id !== notiId));
+            setNotifications(notifications.filter(notification => notification._id !== notiId));
         } catch (error) {
             console.log('Error deleting notification: ', error);
         }
@@ -50,7 +54,7 @@ const Notifications = () => {
     const renderNotificationsTable = (type, title, page, setPage) => {
         const notificationsByType = getNotificationsByType(type, page);
         const totalNotifications = notifications.filter(notification => notification.type === type).length;
-        
+
         return (
             <section className="notification-section">
                 <h2>{title}</h2>
@@ -66,7 +70,7 @@ const Notifications = () => {
                             <tr key={index}>
                                 <td>{notification.message}</td>
                                 <td style={{ textAlign: 'center' }}>
-                                    <button onClick={() => handleDeleteNotification(notification.id)}>Delete</button>
+                                    <button onClick={() => handleDeleteNotification(notification._id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
@@ -79,11 +83,11 @@ const Notifications = () => {
                 </table>
                 <div className="pagination">
                     <button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</button>
-                    
+
                     <span>{notificationsByType.length === 0
-            ? "Page 0 of 0"
-            : `Page ${page} of ${Math.ceil(totalNotifications / pageSize)}`}
-          </span>
+                        ? "Page 0 of 0"
+                        : `Page ${page} of ${Math.ceil(totalNotifications / pageSize)}`}
+                    </span>
                     <button disabled={page === Math.ceil(totalNotifications / pageSize)} onClick={() => setPage(page + 1)}>Next</button>
                 </div>
             </section>

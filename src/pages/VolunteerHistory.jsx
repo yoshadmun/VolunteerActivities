@@ -28,7 +28,12 @@ const VolunteerHistory = () => {
     if (loading) {
         return <div>Loading...</div>
     }
-    
+    const formatLocation = (location) => {
+        return `${location.streetAddress}, ${location.city}, ${location.state}, ${location.zipCode}`;
+      };
+    const formatDate = (dateString) => {
+        return dateString.split('T')[0]; // Extract only the date part
+      };
     return (
         <div className="container">
             <Header />
@@ -51,8 +56,8 @@ const VolunteerHistory = () => {
                         history.map((event, index) => (
                             <tr key={index}>
                                 <td>{event.eventName}</td>
-                                <td>{event.location || 'N/A'}</td>
-                                <td>{event.date}</td>
+                                <td>{formatLocation(event.location) || 'N/A'}</td>
+                                <td>{formatDate(event.date)}</td>
                                 <td>{event.status}</td>
                             </tr>
                         ))

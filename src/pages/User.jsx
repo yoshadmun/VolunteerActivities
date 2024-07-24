@@ -112,6 +112,10 @@ const User = () => {
     return `${location.streetAddress}, ${location.city}, ${location.state} ${location.zipCode}`;
   };
 
+  const formatDate = (dateString) => {
+    return dateString.split('T')[0]; // Extract only the date part
+  };
+
   return (
     <div className="container">
       <Header />
@@ -133,12 +137,12 @@ const User = () => {
         <section className="events-section">
           <h2>Current Assigned Events</h2>
           {assignedEvents.map((event) => (
-            <div key={event.id} className="event-card">
+            <div key={event._id} className="event-card">
               <h3 style={{ textAlign: 'center' }}>{event.eventName}</h3>
               <p>{formatLocation(event.location)}</p>
-              <p><strong>Date:</strong> {event.date}</p>
+              <p><strong>Date:</strong>{formatDate(event.date)}</p>
               <button
-                onClick={() => handleCompleteEvent(event.id)}
+                onClick={() => handleCompleteEvent(event._id)}
                 disabled={!isEventPast(event.date)}
               >
                 {isEventPast(event.date) ? 'Complete' : 'Not Completed Yet'}
@@ -151,10 +155,10 @@ const User = () => {
           <h2>Completed Events</h2>
           <ul className="events-list">
             {completedEvents.map(event => (
-              <li key={event.id} className="event-card">
+              <li key={event._id} className="event-card">
                 <h3 style={{ textAlign: 'center' }}>{event.eventName}</h3>
                 <p>{formatLocation(event.location)}</p>
-                <p><strong>Date:</strong> {event.date}</p>
+                <p><strong>Date:</strong> {formatDate(event.date)}</p>
               </li>
             ))}
           </ul>

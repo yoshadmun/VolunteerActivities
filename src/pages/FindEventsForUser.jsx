@@ -41,13 +41,13 @@ const MatchedEvents = () => {
     try {
       await axios.post('http://localhost:3001/api/eventsforuser/assign', {
         volunteerId: user.sub,
-        eventId: event.id,
+        eventId: event._id,
       });
-      setAssignedEvents((prevAssignedEvents) => new Set(prevAssignedEvents).add(event.id));
+      setAssignedEvents((prevAssignedEvents) => new Set(prevAssignedEvents).add(event._id));
       console.log(`Successfully assigned to event: ${event.eventName}`);
 
       await axios.post(`http://localhost:3001/api/notifications/assignment`,{
-        eventId: event.id,
+        eventId: event._id,
       });
       setMessage('Event assigned and notification sent successfully');
     } catch (error) {
@@ -59,7 +59,9 @@ const MatchedEvents = () => {
   const formatLocation = (location) => {
     return `${location.streetAddress}, ${location.city}, ${location.state} ${location.zipCode}`;
   };
-  
+  const formatDate = (dateString) => {
+    return dateString.split('T')[0]; // Extract only the date part
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -88,9 +90,9 @@ const MatchedEvents = () => {
               <tr key={index}>
                 <td>{event.eventName}</td>
                 <td>{formatLocation(event.location)}</td>
-                <td>{event.date}</td>
+                <td>{formatDate(event.date)}</td>
                 <td>
-                  {assignedEvents.has(event.id) ? (
+                  {assignedEvents.has(event._id) ? (
                     <button disabled style={{ backgroundColor: 'gray', cursor: 'not-allowed' }}>Assigned</button>
                   ) : (
                     <button onClick={() => handleAssign(event)}>Assign</button>

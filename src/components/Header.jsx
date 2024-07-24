@@ -59,29 +59,24 @@ function Header() {
                   </button>
                 </li>
                 <li className='headerLi'>
-                  <DropdownMenu.Root>
-                    <DropdownMenu.Trigger className='dropdown-trigger'>
-                      <HamburgerMenuIcon />
-                    </DropdownMenu.Trigger>
-
-                    <DropdownMenu.Content className='dropdown-content'>
-                      <DropdownMenu.Item className='dropdown-item'>
-                        <Link className='link' to="/user">Dashboard</Link>
-                      </DropdownMenu.Item>
-
-                      <DropdownMenu.Item className='dropdown-item'>
-                        <Link className='link' to="/volunteerhistory">History</Link>
-                      </DropdownMenu.Item>
-
-                      <DropdownMenu.Item className='dropdown-item'>
-                        <Link className='link' to="/notification">Notification</Link>
-                      </DropdownMenu.Item>
-
-                      <DropdownMenu.Item className='dropdown-item' onClick={() => logout({ returnTo: window.location.origin })}>
-                        <Link className='link' to='/'>Logout</Link>
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Root>
+                  <button className='button'>
+                    <Link className='link' to='/user'>Dashboard</Link>
+                  </button>
+                </li>
+                <li className='headerLi'>
+                  <button className='button'>
+                    <Link className='link' to='/volunteerhistory'>History</Link>
+                  </button>
+                </li>
+                <li className='headerLi'>
+                  <button className='button'>
+                    <Link className='link' to='/notification'>Notifications</Link>
+                  </button>
+                </li>
+                <li className='headerLi'>
+                  <button className='button' onClick={()=>logout({returnTo:window.location.origin})}>
+                    <Link className='link' to='/'>Logout</Link>
+                  </button>
                 </li>
               </>
             )}

@@ -49,7 +49,7 @@ function EventForm() {
       },
       requiredSkills: eventData.requiredSkills.map(skill => skill.value),
       urgency: eventData.urgency.value,
-      date: eventData.eventDate.toISOString().split('T')[0], // Extract only the date part
+      date: eventData.eventDate, // Extract only the date part
       assignedVolunteers: [],
       active: true,
     };

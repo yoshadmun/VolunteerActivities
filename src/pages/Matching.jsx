@@ -77,12 +77,12 @@ function VolunteerMatchingForm() {
   }));
 
   const eventOptions = events.map(event => ({
-    value: event.id,
+    value: event._id,
     label: event.eventName,
   }));
 
   const matchedEventOptions = matchedEvents.slice((matchedEventPage - 1) * pageSize, matchedEventPage * pageSize).map(event => ({
-    value: event.id,
+    value: event._id,
     label: event.eventName,
   }));
 
@@ -98,7 +98,7 @@ function VolunteerMatchingForm() {
   };
 
   const handleEventChange = selectedOption => {
-    const event = events.find(e => e.id === selectedOption.value);
+    const event = events.find(e => e._id === selectedOption.value);
     setSelectedEvent(event);
     setMatchedVolunteerPage(1); // Reset matched volunteer page
   };
@@ -114,7 +114,7 @@ function VolunteerMatchingForm() {
     e.preventDefault();
     const data = {
       volunteerId: selectedVolunteer.userId,
-      eventId: selectedEvent.id
+      eventId: selectedEvent._id
     };
     console.log('Form submitted:', data);
 
@@ -183,7 +183,7 @@ function VolunteerMatchingForm() {
                 id="event"
                 options={matchedEventOptions}
                 onChange={handleEventChange}
-                value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.eventName } : null}
+                value={selectedEvent ? { value: selectedEvent._id, label: selectedEvent.eventName } : null}
                 isDisabled={!matchedEvents.length}
                 placeholder="Select event..."
                 required
@@ -206,7 +206,7 @@ function VolunteerMatchingForm() {
                 id="event"
                 options={eventOptions}
                 onChange={handleEventChange}
-                value={selectedEvent ? { value: selectedEvent.id, label: selectedEvent.eventName } : null}
+                value={selectedEvent ? { value: selectedEvent._id, label: selectedEvent.eventName } : null}
                 placeholder="Select event..."
                 required
               />

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const eventRoutes = require('./routes/eventRoutes');
@@ -13,7 +14,7 @@ const findEventsForUserRoutes = require('./routes/findEventsForUserRoutes')
 const getAssignedEventsRoutes = require('./routes/getAssignedEventsRoutes')
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -28,9 +29,19 @@ app.use('/api/assignment', assignmentRoutes);
 app.use('/api/eventsforuser', findEventsForUserRoutes);
 app.use('/api/assigned-events',getAssignedEventsRoutes);
 
+//connect to db
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 
-app.listen(PORT, () => {
+/*app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-});
+});*/
 
 module.exports = app;

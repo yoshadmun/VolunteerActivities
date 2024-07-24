@@ -23,11 +23,13 @@ function ViewEvents() {
 
   const handleRemoveEvent = async (eventId) => {
     try {
+      console.log('Removing event with ID:', eventId); // Log the event ID being removed
+
       //set event to inactive
       await axios.put(`http://localhost:3001/api/events/remove/${eventId}/active`, { active: false });
       //send update notification to assignedVolunteers for that event
       await axios.post(`http://localhost:3001/api/notifications/update/${eventId}`);
-      setEvents(events.filter(e => e.id !== eventId)); // Remove from the current list in state
+      setEvents(events.filter(e => e._id !== eventId)); // Remove from the current list in state
     } catch (error) {
       console.error('Error removing event:', error);
     }
@@ -35,6 +37,9 @@ function ViewEvents() {
 
   const formatLocation = (location) => {
     return `${location.streetAddress}, ${location.city}, ${location.state}, ${location.zipCode}`;
+  };
+  const formatDate = (dateString) => {
+    return dateString.split('T')[0]; // Extract only the date part
   };
 
   return (
@@ -65,13 +70,13 @@ function ViewEvents() {
             </thead>
             <tbody>
               {events.map(event => (
-                <tr key={event.id}>
+                <tr key={event._id}>
                   <td>{event.eventName}</td>
                   <td>{formatLocation(event.location)}</td>
-                  <td>{event.date}</td>
+                  <td>{formatDate(event.date)}</td>
                   <td>{event.requiredSkills.join(', ')}</td>
                   <td>
-                    <button onClick={() => handleRemoveEvent(event.id)}>Remove</button>
+                    <button onClick={() => handleRemoveEvent(event._id)}>Remove</button>
                   </td>
                 </tr>
               ))}
