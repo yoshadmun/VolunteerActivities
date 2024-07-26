@@ -3,10 +3,11 @@ import Select from 'react-select';
 import Header from '../components/Header';
 import axios from 'axios';
 
-
 function VolunteerMatchingForm() {
   const [volunteers, setVolunteers] = useState([]);
+  const [allVolunteers, setAllVolunteers] = useState([]);
   const [events, setEvents] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
   const [selectedVolunteer, setSelectedVolunteer] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [matchedEvents, setMatchedEvents] = useState([]);
@@ -32,6 +33,15 @@ function VolunteerMatchingForm() {
       })
       .catch(error => {
         console.error('Error fetching volunteers:', error);
+        setMessage('Error fetching volunteers');
+      });
+
+    axios.get('http://localhost:3001/api/volunteers?search=&page=1&pageSize=1000')
+      .then(response => {
+        setAllVolunteers(response.data.volunteers);
+      })
+      .catch(error => {
+        console.error('Error fetching all volunteers:', error);
       });
   }, [volunteerSearch, volunteerPage]);
 
@@ -43,24 +53,33 @@ function VolunteerMatchingForm() {
       })
       .catch(error => {
         console.error('Error fetching events:', error);
+        setMessage('Error fetching events');
+      });
+
+    axios.get('http://localhost:3001/api/events?search=&page=1&pageSize=1000')
+      .then(response => {
+        setAllEvents(response.data.events);
+      })
+      .catch(error => {
+        console.error('Error fetching all events:', error);
       });
   }, [eventSearch, eventPage]);
 
   useEffect(() => {
     if (selectedVolunteer) {
-      const matchedEvents = events.filter(event =>
+      const matchedEvents = allEvents.filter(event =>
         event.requiredSkills.some(req => selectedVolunteer.skills.includes(req))
       );
       setMatchedEvents(matchedEvents);
-      if (selecting === "volunteer"){
+      if (selecting === "volunteer") {
         setSelectedEvent(null);
       }
     }
-  }, [selectedVolunteer, events]);
+  }, [selectedVolunteer, allEvents, selecting]);
 
   useEffect(() => {
     if (selectedEvent) {
-      const matchedVolunteers = volunteers.filter(volunteer =>
+      const matchedVolunteers = allVolunteers.filter(volunteer =>
         volunteer.skills.some(skill => selectedEvent.requiredSkills.includes(skill))
       );
       setMatchedVolunteers(matchedVolunteers);
@@ -68,11 +87,10 @@ function VolunteerMatchingForm() {
         setSelectedVolunteer(null); // Reset selected volunteer when event changes
       }
     }
-  }, [selectedEvent, volunteers, selecting]);
-  
+  }, [selectedEvent, allVolunteers, selecting]);
 
   const volunteerOptions = volunteers.map(volunteer => ({
-    value: volunteer.id,
+    value: volunteer.userId,
     label: volunteer.fullName,
   }));
 
@@ -87,18 +105,18 @@ function VolunteerMatchingForm() {
   }));
 
   const matchedVolunteerOptions = matchedVolunteers.slice((matchedVolunteerPage - 1) * pageSize, matchedVolunteerPage * pageSize).map(volunteer => ({
-    value: volunteer.id,
+    value: volunteer.userId,
     label: volunteer.fullName,
   }));
 
   const handleVolunteerChange = selectedOption => {
-    const volunteer = volunteers.find(v => v.id === selectedOption.value);
+    const volunteer = allVolunteers.find(v => v.userId === selectedOption.value);
     setSelectedVolunteer(volunteer);
     setMatchedEventPage(1); // Reset matched event page
   };
 
   const handleEventChange = selectedOption => {
-    const event = events.find(e => e._id === selectedOption.value);
+    const event = allEvents.find(e => e._id === selectedOption.value);
     setSelectedEvent(event);
     setMatchedVolunteerPage(1); // Reset matched volunteer page
   };
@@ -108,10 +126,15 @@ function VolunteerMatchingForm() {
     setSelectedEvent(null); // Reset selected event state
     setMatchedEvents([]); // Clear matched events
     setMatchedVolunteers([]); // Clear matched volunteers
+    setMessage(''); // Clear message
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!selectedVolunteer || !selectedEvent) {
+      setMessage('Please select both a volunteer and an event.');
+      return;
+    }
     const data = {
       volunteerId: selectedVolunteer.userId,
       eventId: selectedEvent._id
@@ -134,7 +157,7 @@ function VolunteerMatchingForm() {
 
   return (
     <div className="container">
-      <Header/>
+      <Header />
       <form className="matchingForm" onSubmit={handleSubmit}>
         <h1>Volunteer Matching Form</h1>
         <div className="toggle-buttons">
@@ -162,12 +185,12 @@ function VolunteerMatchingForm() {
         {selecting === 'volunteer' ? (
           <>
             <div className="form-group">
-              <label htmlFor="volunteer" style={{marginTop:"15px"}}>Volunteer Name</label>
+              <label htmlFor="volunteer" style={{ marginTop: "15px" }}>Volunteer Name</label>
               <Select
                 id="volunteer"
                 options={volunteerOptions}
                 onChange={handleVolunteerChange}
-                value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.fullName } : null}
+                value={selectedVolunteer ? { value: selectedVolunteer.userId, label: selectedVolunteer.fullName } : null}
                 placeholder="Select volunteer..."
                 required
               />
@@ -188,11 +211,11 @@ function VolunteerMatchingForm() {
                 placeholder="Select event..."
                 required
               />
-              <div className="pagination" style={{marginTop:"20px"}}>
+              <div className="pagination" style={{ marginTop: "20px" }}>
                 <button disabled={matchedEventPage === 1} onClick={() => setMatchedEventPage(matchedEventPage - 1)}>Previous</button>
                 <span>{matchedEvents.length === 0
-                      ? "Page 0 of 0"
-                    : `Page ${matchedEventPage} of ${Math.ceil(matchedEvents.length / pageSize)}`}
+                  ? "Page 0 of 0"
+                  : `Page ${matchedEventPage} of ${Math.ceil(matchedEvents.length / pageSize)}`}
                 </span>
                 <button disabled={matchedEventPage === Math.ceil(matchedEvents.length / pageSize)} onClick={() => setMatchedEventPage(matchedEventPage + 1)}>Next</button>
               </div>
@@ -201,7 +224,7 @@ function VolunteerMatchingForm() {
         ) : (
           <>
             <div className="form-group">
-              <label htmlFor="event" style={{marginTop:'15px'}}>Event Name</label>
+              <label htmlFor="event" style={{ marginTop: '15px' }}>Event Name</label>
               <Select
                 id="event"
                 options={eventOptions}
@@ -222,15 +245,15 @@ function VolunteerMatchingForm() {
                 id="volunteer"
                 options={matchedVolunteerOptions}
                 onChange={handleVolunteerChange}
-                value={selectedVolunteer ? { value: selectedVolunteer.id, label: selectedVolunteer.fullName } : null}
+                value={selectedVolunteer ? { value: selectedVolunteer.userId, label: selectedVolunteer.fullName } : null}
                 isDisabled={!matchedVolunteers.length}
                 placeholder="Select volunteer..."
               />
-              <div className="pagination" style={{marginTop:'20px'}}>
+              <div className="pagination" style={{ marginTop: '20px' }}>
                 <button disabled={matchedVolunteerPage === 1} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage - 1)}>Previous</button>
                 <span>{matchedVolunteers.length === 0
-                      ? "Page 0 of 0"
-                    : `Page ${matchedVolunteerPage} of ${Math.ceil(matchedVolunteers.length / pageSize)}`}
+                  ? "Page 0 of 0"
+                  : `Page ${matchedVolunteerPage} of ${Math.ceil(matchedVolunteers.length / pageSize)}`}
                 </span>
                 <button disabled={matchedVolunteerPage === Math.ceil(matchedVolunteers.length / pageSize)} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage + 1)}>Next</button>
               </div>

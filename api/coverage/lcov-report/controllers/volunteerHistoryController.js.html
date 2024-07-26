@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">86.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>13/15</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>12/14</span>
             </div>
         
             
@@ -85,47 +85,68 @@
 <a name='L20'></a><a href='#L20'>20</a>
 <a name='L21'></a><a href='#L21'>21</a>
 <a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const volunteers = require('../data/volunteers'); // Update with the correct path to your data
-const events = require('../data/events'); // Import the events data
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Event = require('../models/EventModel');
+const UserProfile = require('../models/UserProfileModel');
 &nbsp;
-const getVolunteerHistory = (req, res) =&gt; {
-  const { volunteerId } = req.params;
-  const volunteer = volunteers.find(v =&gt; v.userId.toString() === volunteerId);
-  if (!volunteer) {
-    return res.status(404).json({ message: 'Volunteer not found' });
-  }
-  const completedEvents = volunteer.completedEvents.map(eventId =&gt; {
-    const event = events.find(e =&gt; e.id === eventId);
-    return {
+const getVolunteerHistory = async (req,res) =&gt; {
+  const {volunteerId} = req.params;
+  try {
+    const volunteer = await UserProfile.findOne({userId: volunteerId});
+    if(!volunteer){
+      return res.status(404).json({message: 'Volunteer not found'});
+    }
+    const completedEvents = await Event.find({
+      _id: {$in: volunteer.completedEvents}
+    });
+&nbsp;
+    const eventDetails = completedEvents.map(event =&gt; ({
       eventName: event.eventName,
       location: event.location,
       date: event.date,
       status: 'Completed'
-    };
-  });
-  res.json(completedEvents);
+    }));
+&nbsp;
+    res.json(eventDetails);
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error('Error fetching volunteer history:', error);</span>
+<span class="cstat-no" title="statement not covered" >    res.status(500).json({ message: 'Internal server error' });</span>
+  }
 };
 &nbsp;
 module.exports = { getVolunteerHistory };
@@ -136,7 +157,7 @@ module.exports = { getVolunteerHistory };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-20T04:52:36.592Z
+                at 2024-07-26T17:43:46.397Z
             </div>
         <script src="../prettify.js"></script>
         <script>

@@ -1,15 +1,16 @@
 const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {createUserProfile, getUserProfile} = require('../controllers/createUserProfileController');
+const { createUserProfile, getUserProfile } = require('../controllers/createUserProfileController');
+const UserProfile = require('../models/UserProfileModel');
 
 const app = express();
 app.use(bodyParser.json());
 app.get('/api/user-profile/:userId', getUserProfile);
 app.post('/api/user-profile', createUserProfile);
 
-
 describe('User Profile API', () => {
+
   it('should create a new user profile', async () => {
     const newProfile = {
       userId: '31',
@@ -27,10 +28,28 @@ describe('User Profile API', () => {
     };
     const res = await request(app).post('/api/user-profile').send(newProfile);
     expect(res.statusCode).toEqual(201);
-    expect(res.body['Create profile ']).toHaveProperty('userId', '31');
+    expect(res.body.profileData).toHaveProperty('fullName', 'Thinh Pham');
   });
 
   it('should update an existing user profile', async () => {
+    // First, create the profile
+    const newProfile = {
+      userId: '31',
+      profileData: {
+        fullName: 'Thinh Pham',
+        location: {
+          address1: '19000 Hawaii St',
+          city: 'Sugarland',
+          state: 'NY',
+          zipCode: '54321',
+        },
+        skills: ['Organizing', 'Teaching'],
+        availability: '2024-08-01',
+      },
+    };
+    await request(app).post('/api/user-profile').send(newProfile);
+
+    // Then, update the profile
     const updateProfile = {
       userId: '31',
       profileData: {
@@ -47,13 +66,29 @@ describe('User Profile API', () => {
     };
     const res = await request(app).post('/api/user-profile').send(updateProfile);
     expect(res.statusCode).toEqual(200);
-    expect(res.body['Updating profile ']).toHaveProperty('fullName', 'John Updated');
+    expect(res.body.profileData).toHaveProperty('fullName', 'John Updated');
   });
 
   it('should get user profile by ID', async () => {
+    const newProfile = {
+      userId: '1',
+      profileData: {
+        fullName: 'Thinh Pham',
+        location: {
+          address1: '19000 Hawaii St',
+          city: 'Sugarland',
+          state: 'NY',
+          zipCode: '54321',
+        },
+        skills: ['Organizing', 'Teaching'],
+        availability: '2024-08-01',
+      },
+    };
+    await request(app).post('/api/user-profile').send(newProfile);
+
     const res = await request(app).get('/api/user-profile/1');
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('userId', 1);
+    expect(res.body).toHaveProperty('userId', '1');
   });
 
   it('should return 404 if user profile not found', async () => {

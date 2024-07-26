@@ -1,4 +1,3 @@
-const volunteers = require('../data/volunteers'); // Assume this is an array of volunteer objects
 const UserProfile = require('../models/UserProfileModel');
 
 /*const createUserProfile = (req, res) => {

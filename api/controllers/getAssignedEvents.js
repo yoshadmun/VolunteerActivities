@@ -16,11 +16,11 @@ const getAssignedEvents = async (req,res) => {
   try {
     const volunteer = await UserProfile.findOne({userId: volunteerId});
     if(!volunteer){
-      res.status(404).json({message:'Volunteer not found'});
+      return res.status(404).json({message:'Volunteer not found'});
     }
     res.json(volunteer.assignedEvents || []);
   } catch (e) {
-    console.error('Error fetching assigned events:', error);
+    console.error('Error fetching assigned events:', e);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
