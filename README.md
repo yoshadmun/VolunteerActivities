@@ -12,3 +12,6 @@ Pw: Thinh2405!
 For admin, use:
 ID: thinhpham240594@gmail.com
 Pw: Thinh2405!
+
+For running code coverage test: 
+go to api folder by cd api then run npm test.
