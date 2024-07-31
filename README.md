@@ -18,5 +18,10 @@ For admin, use:
 ID: thinhpham240594@gmail.com
 Pw: Thinh2405!
 
+To access additional users:
+ID: name123@gmail.com
+Pw: Name123.gmail
+Note: For ID name starts with lower case letter (bob). For password, name starts with upper case letter (Bob)
+
 For running code coverage test: 
 go to api folder by cd api then run npm test.
