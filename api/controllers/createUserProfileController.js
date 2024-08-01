@@ -18,6 +18,7 @@ const UserProfile = require('../models/UserProfileModel');
 
 const createUserProfile = async (req, res) => {
   const { userId, profileData } = req.body;
+  console.log(userId);
   try {
     let profile = await UserProfile.findOne({ userId });
 
