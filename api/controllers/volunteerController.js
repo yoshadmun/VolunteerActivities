@@ -1,9 +1,9 @@
 const Event = require('../models/EventModel');
 const UserProfile = require('../models/UserProfileModel');
 
-const getEventDetails = async (eventIds) => {
+/*const getEventDetails = async (eventIds) => {
   return await Event.find({_id: {$in: eventIds}});
-}
+}*/
 
 const getVolunteers = async (req,res) => {
   const {search ='', page=1, pageSize=10} = req.query;
@@ -15,7 +15,6 @@ const getVolunteers = async (req,res) => {
       .skip((page-1) * pageSize)
       .limit(parseInt(pageSize))
       .populate("assignedEvents completedEvents");
-    console.log(volunteers);
     res.json({volunteers, total});
   } catch (error) {
     console.error('Error fetching volunteers:', error);
@@ -46,7 +45,34 @@ const removeVolunteer = async (req,res) => {
   }
 };
 
+const getVolunteersByEvent = async (req, res) => {
+  const { eventId } = req.query;
+
+  if (!eventId) {
+    return res.status(400).json({ message: 'Event ID is required' });
+  }
+
+  try {
+    const volunteers = await UserProfile.find({
+      $or: [
+        { assignedEvents: eventId },
+        { completedEvents: eventId }
+      ]
+    });
+
+    if (!volunteers.length) {
+      return res.status(404).json({ message: 'No volunteers found for this event' });
+    }
+    res.json(volunteers);
+  } catch (error) {
+    console.error('Error fetching volunteers:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 module.exports = {
   getVolunteers,
   removeVolunteer,
+  getVolunteersByEvent,
 };

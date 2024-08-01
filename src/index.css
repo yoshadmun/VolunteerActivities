@@ -93,7 +93,7 @@ body {
   inset: 0;
   background: pink;
   opacity: .6;
-  background-image: url('./assets/volunteer.jpeg');
+  background-image: url('/assets/volunteer.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
 }

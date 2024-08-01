@@ -12,6 +12,7 @@ const volunteerHistoryRoutes = require('./routes/volunteerHistoryRoutes');
 const assignmentRoutes = require('./routes/assignmentRoutes');
 const findEventsForUserRoutes = require('./routes/findEventsForUserRoutes')
 const getAssignedEventsRoutes = require('./routes/getAssignedEventsRoutes')
+const getReportRoutes = require('./routes/reportRoutes')
 
 const app = express();
 const PORT = process.env.PORT;
@@ -28,6 +29,7 @@ app.use('/api/volunteerHistory', volunteerHistoryRoutes);
 app.use('/api/assignment', assignmentRoutes);
 app.use('/api/eventsforuser', findEventsForUserRoutes);
 app.use('/api/assigned-events',getAssignedEventsRoutes);
+app.use('/api/report', getReportRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

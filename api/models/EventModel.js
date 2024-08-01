@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
-    eventName: {type: String, required: true, maxlengh: 100},
+    eventName: {type: String, required: true, maxlength: 100},
     eventDescription: {type: String, required:true},
     location:{
         streetAddress: {type: String, required: true},

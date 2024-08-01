@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 function ViewEvents() {
   const [events, setEvents] = useState([]);
   const [eventSearch, setEventSearch] = useState('');
   const [eventPage, setEventPage] = useState(1);
   const [eventTotal, setEventTotal] = useState(0);
+  const navigate = useNavigate();
 
   const pageSize = 20;
 
@@ -19,7 +22,7 @@ function ViewEvents() {
       .catch(error => {
         console.error('Error fetching events:', error);
       });
-  }, [eventSearch, eventPage, events]);
+  }, [eventSearch, eventPage]);
 
   const handleRemoveEvent = async (eventId) => {
     try {
@@ -40,6 +43,42 @@ function ViewEvents() {
   };
   const formatDate = (dateString) => {
     return dateString.split('T')[0]; // Extract only the date part
+  };
+
+  const handleEventClick = (eventId) => {
+    navigate(`/event/${eventId}`);
+  };
+
+  const downloadCSV = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/report/events/csv', {
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'events_report.csv');
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error generating CSV report:', error);
+    }
+  };
+
+  const downloadPDF = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/report/events/pdf', {
+        responseType: 'blob',
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'events_report.pdf');
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error generating PDF report:', error);
+    }
   };
 
   return (
@@ -71,7 +110,9 @@ function ViewEvents() {
             <tbody>
               {events.map(event => (
                 <tr key={event._id}>
-                  <td>{event.eventName}</td>
+                  <td onClick={() => handleEventClick(event._id)} style={{ cursor: 'pointer' }}>
+                    {event.eventName}
+                  </td>
                   <td>{formatLocation(event.location)}</td>
                   <td>{formatDate(event.date)}</td>
                   <td>{event.requiredSkills.join(', ')}</td>
@@ -90,6 +131,14 @@ function ViewEvents() {
             : `Page ${eventPage} of ${Math.ceil(eventTotal / pageSize)}`}
           </span>
           <button disabled={eventPage === Math.ceil(eventTotal / pageSize)} onClick={() => setEventPage(eventPage + 1)}>Next</button>
+        </div>
+        <div style={{ marginBottom:'20px', display: 'flex', justifyContent: 'space-between', width:'50%' }}>
+          <button  onClick={downloadCSV}style={{ padding: '10px 20px', fontSize: '1.5rem', backgroundColor: 'darkslateblue', color: 'white', border: 'none', cursor: 'pointer' }}>
+            Download CSV
+          </button>
+          <button  onClick={downloadPDF}style={{ padding: '10px 20px', fontSize: '1.5rem', backgroundColor: 'darkslateblue', color: 'white', border: 'none', cursor: 'pointer' }}>
+            Download PDF 
+          </button>
         </div>
       </div>
     </div>

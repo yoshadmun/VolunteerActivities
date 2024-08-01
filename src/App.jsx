@@ -14,6 +14,8 @@ import UserProfileForm from './pages/UserProfileForm';
 import FindEventForUser from './pages/FindEventsForUser';
 import { useAuth0 } from '@auth0/auth0-react';
 import ViewEvents from './pages/ViewEvents';
+import EventDetails from './pages/EventDetails';
+
 
 function App() {
   const {isAuthenticated} = useAuth0();
@@ -32,6 +34,7 @@ function App() {
         <Route path='userprofileform' element={<UserProfileForm/>}/>
         <Route path="/eventsforuser" element={<FindEventForUser/>}/>
         <Route path='/viewevents' element={<ViewEvents/>}/>
+        <Route path="/event/:eventId" element={<EventDetails/>} />
       </Routes>
     </Router>
   );
