@@ -159,7 +159,7 @@ function VolunteerMatchingForm() {
     <div className="container">
       <Header />
       <form className="matchingForm" onSubmit={handleSubmit}>
-        <h1>Volunteer Matching Form</h1>
+        <h1 style={{textAlign:'center',fontSize:'2rem'}}>Volunteer Matching Form</h1>
         <div className="toggle-buttons">
           <button type="button" onClick={() => setSelecting('volunteer')}>
             Select Volunteer First
@@ -169,18 +169,22 @@ function VolunteerMatchingForm() {
           </button>
         </div>
         <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search Volunteers..."
-            value={volunteerSearch}
-            onChange={e => setVolunteerSearch(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Search Events..."
-            value={eventSearch}
-            onChange={e => setEventSearch(e.target.value)}
-          />
+          {selecting === 'volunteer' ? (
+            <input
+              type="text"
+              placeholder="Search Volunteers..."
+              value={volunteerSearch}
+              onChange={e => setVolunteerSearch(e.target.value)}
+            />
+          ) : (
+            <input
+              type="text"
+              placeholder="Search Events..."
+              value={eventSearch}
+              onChange={e => setEventSearch(e.target.value)}
+              style={{marginTop:'1rem'}}
+            />
+          )}
         </div>
         {selecting === 'volunteer' ? (
           <>
@@ -196,9 +200,9 @@ function VolunteerMatchingForm() {
               />
             </div>
             <div className="pagination">
-              <button disabled={volunteerPage === 1} onClick={() => setVolunteerPage(volunteerPage - 1)}>Previous</button>
+              <button type="button" disabled={volunteerPage === 1} onClick={() => setVolunteerPage(volunteerPage - 1)}>Previous</button>
               <span>Page {volunteerPage} of {Math.ceil(volunteerTotal / pageSize)}</span>
-              <button disabled={volunteerPage === Math.ceil(volunteerTotal / pageSize)} onClick={() => setVolunteerPage(volunteerPage + 1)}>Next</button>
+              <button type="button" disabled={volunteerPage === Math.ceil(volunteerTotal / pageSize)} onClick={() => setVolunteerPage(volunteerPage + 1)}>Next</button>
             </div>
             <div className="form-group">
               <label htmlFor="event">Matched Event</label>
@@ -212,12 +216,12 @@ function VolunteerMatchingForm() {
                 required
               />
               <div className="pagination" style={{ marginTop: "20px" }}>
-                <button disabled={matchedEventPage === 1} onClick={() => setMatchedEventPage(matchedEventPage - 1)}>Previous</button>
+                <button type="button" disabled={matchedEventPage === 1} onClick={() => setMatchedEventPage(matchedEventPage - 1)}>Previous</button>
                 <span>{matchedEvents.length === 0
                   ? "Page 0 of 0"
                   : `Page ${matchedEventPage} of ${Math.ceil(matchedEvents.length / pageSize)}`}
                 </span>
-                <button disabled={matchedEventPage === Math.ceil(matchedEvents.length / pageSize)} onClick={() => setMatchedEventPage(matchedEventPage + 1)}>Next</button>
+                <button type="button" disabled={matchedEventPage === Math.ceil(matchedEvents.length / pageSize)} onClick={() => setMatchedEventPage(matchedEventPage + 1)}>Next</button>
               </div>
             </div>
           </>
@@ -235,9 +239,9 @@ function VolunteerMatchingForm() {
               />
             </div>
             <div className="pagination">
-              <button disabled={eventPage === 1} onClick={() => setEventPage(eventPage - 1)}>Previous</button>
+              <button type="button" disabled={eventPage === 1} onClick={() => setEventPage(eventPage - 1)}>Previous</button>
               <span>Page {eventPage} of {Math.ceil(eventTotal / pageSize)}</span>
-              <button disabled={eventPage === Math.ceil(eventTotal / pageSize)} onClick={() => setEventPage(eventPage + 1)}>Next</button>
+              <button type="button" disabled={eventPage === Math.ceil(eventTotal / pageSize)} onClick={() => setEventPage(eventPage + 1)}>Next</button>
             </div>
             <div className="form-group">
               <label htmlFor="volunteer">Matched Volunteer</label>
@@ -250,21 +254,21 @@ function VolunteerMatchingForm() {
                 placeholder="Select volunteer..."
               />
               <div className="pagination" style={{ marginTop: '20px' }}>
-                <button disabled={matchedVolunteerPage === 1} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage - 1)}>Previous</button>
+                <button type="button" disabled={matchedVolunteerPage === 1} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage - 1)}>Previous</button>
                 <span>{matchedVolunteers.length === 0
                   ? "Page 0 of 0"
                   : `Page ${matchedVolunteerPage} of ${Math.ceil(matchedVolunteers.length / pageSize)}`}
                 </span>
-                <button disabled={matchedVolunteerPage === Math.ceil(matchedVolunteers.length / pageSize)} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage + 1)}>Next</button>
+                <button type="button" disabled={matchedVolunteerPage === Math.ceil(matchedVolunteers.length / pageSize)} onClick={() => setMatchedVolunteerPage(matchedVolunteerPage + 1)}>Next</button>
               </div>
             </div>
           </>
         )}
         <div className="form-actions" style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <button className="button" type="button" onClick={handleReset}>
+          <button className="button" type="button" onClick={handleReset} style={{color:'black',fontWeight:'bold'}}>
             Reset
           </button>
-          <button className="button" type="submit">
+          <button className="button" type="submit" style={{color:'black',fontWeight:'bold'}}>
             Submit
           </button>
         </div>

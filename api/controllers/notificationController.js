@@ -67,6 +67,7 @@ const notifyEventUpdate = async (req, res) => {
   }
 
   try {
+    console.log('Notification update for event with eventId, ', eventId);
     const event = await Event.findById(eventId);
     if (!event) {
       return res.status(404).json({ message: 'Event not found' });
@@ -76,6 +77,7 @@ const notifyEventUpdate = async (req, res) => {
       const message = `Update: The event ${event.eventName} scheduled on ${event.date} has been cancelled`;
       await sendNotification(volunteer.userId, message, 'update');
     }
+
     res.status(200).json({ message: 'Update notifications sent for cancelled event' });
   } catch (error) {
     console.error('Error sending update notification:', error);

@@ -311,10 +311,10 @@ body {
   justify-content: center;
   padding: 1rem 2rem;
   background-color: #79b2ee;
-  color: white;
+  color: black;
   border-radius: 5px;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 
 .dashboard-link:hover {

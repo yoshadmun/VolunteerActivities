@@ -119,28 +119,28 @@ const User = () => {
   return (
     <div className="container">
       <Header />
-      <div style={{ display: 'flex', justifyContent: 'center', fontSize: '2rem', fontFamily: 'monospace', padding: '2rem' }}>
+      <h2 style={{ display: 'flex', justifyContent: 'center', fontSize: '3rem', fontFamily: 'monospace', padding: '2rem', color:'black' }}>
         User Dashboard
-      </div>
+      </h2>
       <div style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'row' }}>
         <section className="events-section">
-          <h2>
+          <h2 style={{color:'darkslateblue'}}>
             <Link className='link' to='/userprofileform'>Edit Profile</Link>
           </h2>
           <div className="event-card">
-            <h3 style={{ textAlign: 'center' }}>{profile ? profile.fullName : 'User name'}</h3>
-            <p>{profile ? `${profile.location.address1}, ${profile.location.city}, ${profile.location.state} ${profile.location.zipCode}` : 'User Address'}</p>
-            <p><strong>Skills:</strong> {profile ? profile.skills.join(', ') : 'User Skills'}</p>
+            <h3 style={{ textAlign: 'center', color:'darkslateblue'  }}>{profile ? profile.fullName : 'User name'}</h3>
+            <p style={{color:'darkslateblue'}}>{profile ? `${profile.location.address1}, ${profile.location.city}, ${profile.location.state} ${profile.location.zipCode}` : 'User Address'}</p>
+            <p style={{color:'darkslateblue'}}><strong>Skills:</strong> {profile ? profile.skills.join(', ') : 'User Skills'}</p>
           </div>
         </section>
 
         <section className="events-section">
-          <h2>Current Assigned Events</h2>
+          <h2 style={{color:'darkslateblue'}}>Current Assigned Events</h2>
           {assignedEvents.map((event) => (
             <div key={event._id} className="event-card">
-              <h3 style={{ textAlign: 'center' }}>{event.eventName}</h3>
-              <p>{formatLocation(event.location)}</p>
-              <p><strong>Date:</strong>{formatDate(event.date)}</p>
+              <h3 style={{ textAlign: 'center', color:'darkslateblue' }}>{event.eventName}</h3>
+              <p style={{color:'darkslateblue'}}>{formatLocation(event.location)}</p>
+              <p style={{color:'darkslateblue'}}><strong>Date:</strong>{formatDate(event.date)}</p>
               <button
                 onClick={() => handleCompleteEvent(event._id)}
                 disabled={!isEventPast(event.date)}
@@ -152,13 +152,13 @@ const User = () => {
         </section>
 
         <section className="events-section">
-          <h2>Completed Events</h2>
+          <h2 style={{color:'darkslateblue'}}>Completed Events</h2>
           <ul className="events-list">
             {completedEvents.map(event => (
               <li key={event._id} className="event-card">
-                <h3 style={{ textAlign: 'center' }}>{event.eventName}</h3>
-                <p>{formatLocation(event.location)}</p>
-                <p><strong>Date:</strong> {formatDate(event.date)}</p>
+                <h3 style={{ textAlign: 'center', color:'darkslateblue' }}>{event.eventName}</h3>
+                <p style={{color:'darkslateblue'}}>{formatLocation(event.location)}</p>
+                <p style={{color:'darkslateblue'}}><strong>Date:</strong> {formatDate(event.date)}</p>
               </li>
             ))}
           </ul>

@@ -24,19 +24,19 @@ function Header() {
         <div className='headerpage2'>
           <ul className='headerUl1'>
             <li className='headerLi'>
-              <button className='button'>
+              <button className='button' style={{color:'black', fontWeight:'bold'}}>
                 <Link className='link' to='/'>Home</Link>
               </button>
             </li>
             {isAdmin && (
               <>
                 <li className='headerLi'>
-                  <button className='button'>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}}>
                     <Link className='link' to='/admindashboard'>Admin</Link>
                   </button>
                 </li>
                 <li className='headerLi'>
-                  <button className='button' onClick={() => logout({returnTo: window.location.origin})}>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}} onClick={() => logout({returnTo: window.location.origin})}>
                     <Link className='link' to='/'>Log out</Link>
                   </button>
                 </li>
@@ -45,7 +45,7 @@ function Header() {
             {!isAuthenticated && (
               <>
                 <li className='headerLi'>
-                  <button className='button' onClick={handleLogin} >
+                  <button className='button' onClick={handleLogin} style={{color:'black', fontWeight:'bold'}} >
                     <Link className='link'>Login</Link>
                   </button>
                 </li>
@@ -54,27 +54,27 @@ function Header() {
             {isAuthenticated && !isAdmin && (
               <>
                 <li className='headerLi'>
-                  <button className='button'>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}}>
                     <Link className='link' to='/eventsforuser'>Events</Link>
                   </button>
                 </li>
                 <li className='headerLi'>
-                  <button className='button'>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}}>
                     <Link className='link' to='/user'>Dashboard</Link>
                   </button>
                 </li>
                 <li className='headerLi'>
-                  <button className='button'>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}}>
                     <Link className='link' to='/volunteerhistory'>History</Link>
                   </button>
                 </li>
                 <li className='headerLi'>
-                  <button className='button'>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}}>
                     <Link className='link' to='/notification'>Notifications</Link>
                   </button>
                 </li>
                 <li className='headerLi'>
-                  <button className='button' onClick={()=>logout({returnTo:window.location.origin})}>
+                  <button className='button' style={{color:'black', fontWeight:'bold'}} onClick={()=>logout({returnTo:window.location.origin})}>
                     <Link className='link' to='/'>Logout</Link>
                   </button>
                 </li>

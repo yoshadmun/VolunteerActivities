@@ -57,11 +57,11 @@ const Notifications = () => {
 
         return (
             <section className="notification-section">
-                <h2>{title}</h2>
+                <h2 style={{color:'black'}}>{title}</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Message</th>
+                            <th style={{color:'black'}}>Message</th>
                             <th style={{ width: '100px' }}>Actions</th>
                         </tr>
                     </thead>
@@ -101,7 +101,7 @@ const Notifications = () => {
     return (
         <div className="container">
             <Header />
-            <div className="notification-header">Notifications</div>
+            <h2 className="notification-header" style={{color:'black', fontSize:'3rem'}}>Notifications</h2>
             <div className="notifications-content">
                 {renderNotificationsTable('assignment', 'New Event Assignments', assignmentPage, setAssignmentPage)}
                 {renderNotificationsTable('update', 'Event Updates', updatePage, setUpdatePage)}

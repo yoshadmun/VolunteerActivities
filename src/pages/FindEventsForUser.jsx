@@ -70,14 +70,14 @@ const MatchedEvents = () => {
   return (
     <div className="container">
       <Header />
-      <div style={{ display: 'flex', justifyContent: 'center', fontSize: '2rem', fontFamily: 'monospace', padding: '2rem' }}>Matched Events</div>
+      <h2 style={{ display: 'flex', justifyContent: 'center', fontSize: '3rem', fontFamily: 'monospace', padding: '2rem',color:'black' }}>Matched Events</h2>
       <table>
         <thead>
           <tr>
-            <th>Event Name</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Actions</th>
+            <th style={{color:'black'}}>Event Name</th>
+            <th style={{color:'black'}}>Location</th>
+            <th style={{color:'black'}}>Date</th>
+            <th style={{color:'black'}}>Actions</th>
           </tr>
         </thead>
         <tbody>

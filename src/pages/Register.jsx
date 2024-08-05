@@ -41,8 +41,8 @@ const Register = () => {
                 <Header />
                 <div className="register">
                     <form onSubmit={handleSubmit}>
-                        <h2>Registration</h2>
-                        <p>Please provide the following to verify your identity</p>
+                        <h2 style={{color:'black'}}>Registration</h2>
+                        <p style={{color:'black'}}>Please provide the following to verify your identity</p>
 
                         {error && <p className="error">{error}</p>}
 
@@ -83,8 +83,8 @@ const Register = () => {
 
                         <button className='loginbutton' type="submit">Register</button>
                         <div className="login-link" onClick={handleLogin}>
-                            <p>Already have an account?  
-                                <Link className='link'> Login</Link>
+                            <p style={{color:'black'}}>Already have an account?  
+                                <Link className='link' style={{color:'black'}}> Login</Link>
                             </p>
                         </div>
                     </form>

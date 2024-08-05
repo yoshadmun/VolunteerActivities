@@ -40,30 +40,6 @@ const EventDetails = () => {
     return volunteers.map(volunteer => volunteer.fullName).join(', ');
   };
 
-  const downloadCSV = async () => {
-    const response = await axios.get('http://localhost:3001/api/reports/events', {
-      responseType: 'blob',
-    });
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'volunteers_report.csv');
-    document.body.appendChild(link);
-    link.click();
-  };
-
-  const downloadPDF = async () => {
-    const response = await axios.get('http://localhost:3001/api/reports/events', {
-      responseType: 'blob',
-    });
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'volunteers_report.pdf');
-    document.body.appendChild(link);
-    link.click();
-  };
-
   return (
     <div className="container">
       <Header />
@@ -87,9 +63,6 @@ const EventDetails = () => {
             </tr>
           </tbody>
         </table>
-        <button onClick={downloadPDF} style={{ marginTop: '20px', padding: '10px 20px', fontSize: '1.5rem', backgroundColor: 'darkslateblue', color: 'white', border: 'none', cursor: 'pointer' }}>
-          Generate Report
-        </button>
       </div>
     
     </div>

@@ -246,10 +246,10 @@ function EventForm() {
             className='datepicker'
           />
           <div className="form-actions" style={{ display: 'flex', justifyContent: 'space-evenly', gap: '100px' }}>
-            <button className="button" type="button" onClick={handleReset}>
+            <button className="button" type="button" onClick={handleReset} style={{color:'black'}}>
               Reset
             </button>
-            <button className="button" type="submit">
+            <button className="button" type="submit" style={{color:'black'}}>
               Submit
             </button>
           </div>

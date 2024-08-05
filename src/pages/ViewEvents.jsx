@@ -27,11 +27,11 @@ function ViewEvents() {
   const handleRemoveEvent = async (eventId) => {
     try {
       console.log('Removing event with ID:', eventId); // Log the event ID being removed
-
-      //set event to inactive
-      await axios.put(`http://localhost:3001/api/events/remove/${eventId}/active`, { active: false });
       //send update notification to assignedVolunteers for that event
       await axios.post(`http://localhost:3001/api/notifications/update/${eventId}`);
+      //set event to inactive
+      await axios.put(`http://localhost:3001/api/events/remove/${eventId}/active`, { active: false });
+     
       setEvents(events.filter(e => e._id !== eventId)); // Remove from the current list in state
     } catch (error) {
       console.error('Error removing event:', error);

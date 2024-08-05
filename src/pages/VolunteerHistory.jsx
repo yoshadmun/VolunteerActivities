@@ -37,14 +37,14 @@ const VolunteerHistory = () => {
     return (
         <div className="container">
             <Header />
-            <div style={{ display: 'flex', justifyContent: 'center', fontSize: '2rem', fontFamily: 'monospace', padding: '2rem' }}>Volunteer History</div>
+            <h2 style={{ display: 'flex', justifyContent: 'center', fontSize: '3rem', fontFamily: 'monospace', padding: '2rem', color:'black' }}>Volunteer History</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Event Name</th>
-                        <th>Location</th>
-                        <th>Event Date</th>
-                        <th>Status</th>
+                        <th style={{color:'black'}}>Event Name</th>
+                        <th style={{color:'black'}}>Location</th>
+                        <th style={{color:'black'}}>Event Date</th>
+                        <th style={{color:'black'}}>Status</th>
                     </tr>
                 </thead>
                 <tbody>
