@@ -2,18 +2,19 @@ const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const { 
-  notifyEventAssignment, 
-  notifyEventUpdate, 
-  notifyEventReminder, 
-  getNotifications, 
-  getNotificationsForUser, 
-  removeNotification 
+const {
+  notifyEventAssignment,
+  notifyEventUpdate,
+  notifyEventReminder,
+  getNotifications,
+  getNotificationsForUser,
+  removeNotification,
 } = require('../controllers/notificationController');
-const UserProfile = require('../models/UserProfileModel');
 const Event = require('../models/EventModel');
+const UserProfile = require('../models/UserProfileModel');
 const Notification = require('../models/NotificationModel');
 
+// Setup Express app
 const app = express();
 app.use(bodyParser.json());
 
@@ -24,204 +25,276 @@ app.post('/api/notifications/update/:eventId', notifyEventUpdate);
 app.post('/api/notifications/reminder/:volunteerId', notifyEventReminder);
 app.delete('/api/notifications/delete/:notiId', removeNotification);
 
-describe('Notification API', () => {
-  let volunteer, event, notification;
-
-  beforeEach(async () => {
-    volunteer = new UserProfile({
-      userId: 'auth0|668f110d027281244eb0b4db',
-      fullName: 'Test Volunteer',
-      location: {
-        address1: 'Test Address',
-        city: 'Test City',
-        state: 'TS',
-        zipCode: '12345'
-      },
-      skills: ['Cleaning', 'Organizing'],
-      availability: '2024-07-21',
-      assignedEvents: [],
-      completedEvents: [],
-      active: true
-    });
-    await volunteer.save();
-
-    event = new Event({
+describe('Notification Controller', () => {
+  it('should send assignment notifications', async () => {
+    const event = new Event({
       eventName: 'Test Event',
-      eventDescription: 'Event Description',
+      eventDescription: 'Test Description',
       location: {
-        streetAddress: 'Event Address',
-        city: 'Event City',
-        state: 'ES',
-        zipCode: '54321'
+        streetAddress: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipCode: '12345',
       },
-      requiredSkills: ['Cleaning'],
+      requiredSkills: ['Skill1'],
       urgency: 'High',
       date: new Date(),
-      assignedVolunteers: [volunteer._id],
-      active: true
+      assignedVolunteers: [],
+      active: true,
     });
+
     await event.save();
 
-    notification = new Notification({
-      volunteerId: volunteer.userId,
-      message: 'Test Notification',
-      type: 'reminder',
-      date: new Date()
-    });
-    await notification.save();
-  });
-
-  afterEach(async () => {
-    await mongoose.connection.dropDatabase();
-  });
-
-  it('should get all notifications', async () => {
-    const res = await request(app).get('/api/notifications');
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toBeGreaterThan(0);
-  });
-
-  it('should get notifications for a user', async () => {
-    const res = await request(app).get(`/api/notifications/user/${volunteer.userId}`);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toEqual(1);
-  });
-
-  it('should send assignment notification', async () => {
-    const newEvent = new Event({
-      eventName: 'New Test Event',
-      eventDescription: 'New Event Description',
+    const userProfile = new UserProfile({
+      userId: '1',
+      fullName: 'John Doe',
       location: {
-        streetAddress: 'New Event Address',
-        city: 'New Event City',
-        state: 'NE',
-        zipCode: '54321'
+        address1: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipCode: '12345',
       },
-      requiredSkills: ['Cleaning'],
-      urgency: 'Medium',
-      date: new Date(),
-      assignedVolunteers: [volunteer._id],
-      active: true
+      skills: ['Skill1', 'Skill2'],
+      availability: 'Weekends',
+      assignedEvents: [event._id],
+      completedEvents: [],
+      active: true,
     });
-    await newEvent.save();
 
-    const res = await request(app)
+    await userProfile.save();
+
+    const response = await request(app)
       .post('/api/notifications/assignment')
-      .send({ eventId: newEvent._id.toString() });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toBe('Assignment notification sent');
+      .send({ eventId: event._id });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Assignment notification sent');
+
+    const notifications = await Notification.find();
+    expect(notifications.length).toBe(1);
+    expect(notifications[0].message).toContain('You have been assigned to the event: Test Event');
   });
 
-  it('should handle invalid event ID format in assignment notification', async () => {
-    const res = await request(app)
+  it('should handle invalid event ID format in assignment notifications', async () => {
+    const response = await request(app)
       .post('/api/notifications/assignment')
-      .send({ eventId: 'invalid_event_id' });
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toBe('Invalid event ID format');
+      .send({ eventId: 'invalidId' });
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid event ID format');
   });
 
-  it('should handle event not found in assignment notification', async () => {
-    const res = await request(app)
+  it('should handle event not found in assignment notifications', async () => {
+    const eventId = new mongoose.Types.ObjectId();
+    const response = await request(app)
       .post('/api/notifications/assignment')
-      .send({ eventId: new mongoose.Types.ObjectId().toString() });
-    expect(res.statusCode).toEqual(404);
-    expect(res.body.message).toBe('Event not found');
+      .send({ eventId });
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Event not found');
   });
 
-  it('should handle no volunteers assigned to an event', async () => {
-    const newEvent = new Event({
-      eventName: 'New Test Event',
-      eventDescription: 'New Event Description',
+  it('should send update notifications', async () => {
+    const event = new Event({
+      eventName: 'Test Event',
+      eventDescription: 'Test Description',
       location: {
-        streetAddress: 'New Event Address',
-        city: 'New Event City',
-        state: 'NE',
-        zipCode: '54321'
+        streetAddress: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipCode: '12345',
       },
-      requiredSkills: ['Cleaning'],
-      urgency: 'Medium',
+      requiredSkills: ['Skill1'],
+      urgency: 'High',
       date: new Date(),
       assignedVolunteers: [],
-      active: true
+      active: true,
     });
-    await newEvent.save();
 
-    const res = await request(app)
-      .post('/api/notifications/assignment')
-      .send({ eventId: newEvent._id.toString() });
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toBe('Assignment notification sent');
-  });
+    await event.save();
 
-  it('should send update notification', async () => {
-    const res = await request(app)
-      .post(`/api/notifications/update/${event._id.toString()}`)
+    const userProfile = new UserProfile({
+      userId: '1',
+      fullName: 'John Doe',
+      location: {
+        address1: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipCode: '12345',
+      },
+      skills: ['Skill1', 'Skill2'],
+      availability: 'Weekends',
+      assignedEvents: [event._id],
+      completedEvents: [],
+      active: true,
+    });
+
+    await userProfile.save();
+
+    const response = await request(app)
+      .post(`/api/notifications/update/${event._id}`)
       .send();
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toBe('Update notifications sent for cancelled event');
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Update notifications sent for cancelled event');
+
+    const notifications = await Notification.find();
+    expect(notifications.length).toBe(1);
+    expect(notifications[0].message).toContain('Update: The event Test Event scheduled on');
   });
 
-  it('should handle invalid event ID format in update notification', async () => {
-    const res = await request(app)
-      .post('/api/notifications/update/invalid_event_id')
+  it('should handle invalid event ID format in update notifications', async () => {
+    const response = await request(app)
+      .post('/api/notifications/update/invalidId')
       .send();
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toBe('Invalid event ID format');
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid event ID format');
   });
 
-  it('should handle event not found in update notification', async () => {
-    const res = await request(app)
-      .post(`/api/notifications/update/${new mongoose.Types.ObjectId().toString()}`)
+  it('should handle event not found in update notifications', async () => {
+    const eventId = new mongoose.Types.ObjectId();
+    const response = await request(app)
+      .post(`/api/notifications/update/${eventId}`)
       .send();
-    expect(res.statusCode).toEqual(404);
-    expect(res.body.message).toBe('Event not found');
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Event not found');
   });
 
-  it('should send reminder notification', async () => {
-    const res = await request(app).post(`/api/notifications/reminder/${volunteer.userId}`);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toBe('Event reminder notification sent');
+  it('should send event reminder notifications', async () => {
+    const event = new Event({
+      eventName: 'Test Event',
+      eventDescription: 'Test Description',
+      location: {
+        streetAddress: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipCode: '12345',
+      },
+      requiredSkills: ['Skill1'],
+      urgency: 'High',
+      date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+      assignedVolunteers: [],
+      active: true,
+    });
+
+    await event.save();
+
+    const userProfile = new UserProfile({
+      userId: '1',
+      fullName: 'John Doe',
+      location: {
+        address1: '123 Main St',
+        city: 'Anytown',
+        state: 'CA',
+        zipCode: '12345',
+      },
+      skills: ['Skill1', 'Skill2'],
+      availability: 'Weekends',
+      assignedEvents: [event._id],
+      completedEvents: [],
+      active: true,
+    });
+
+    await userProfile.save();
+
+    const response = await request(app)
+      .post(`/api/notifications/reminder/${userProfile.userId}`)
+      .send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Event reminder notification sent');
+
+    const notifications = await Notification.find();
+    expect(notifications.length).toBe(1);
+    expect(notifications[0].message).toContain('Reminder: The event Test Event is happening on');
   });
 
-  it('should handle volunteer not found in reminder notification', async () => {
-    const res = await request(app).post('/api/notifications/reminder/invalid_volunteer_id');
-    expect(res.statusCode).toEqual(404);
-    expect(res.body.message).toBe('Volunteer not found: invalid_volunteer_id');
+  it('should handle volunteer not found in reminder notifications', async () => {
+    const response = await request(app)
+      .post('/api/notifications/reminder/1')
+      .send();
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Volunteer not found: 1');
   });
 
-  it('should handle no events assigned to volunteer in reminder notification', async () => {
-    volunteer.assignedEvents = [];
-    await volunteer.save();
+  it('should fetch all notifications', async () => {
+    const notification = new Notification({
+      volunteerId: '1',
+      message: 'Test notification',
+      type: 'assignment',
+      date: new Date(),
+    });
 
-    const res = await request(app).post(`/api/notifications/reminder/${volunteer.userId}`);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toBe('Event reminder notification sent');
-    expect(res.body.reminder.length).toBe(0);
+    await notification.save();
+
+    const response = await request(app)
+      .get('/api/notifications')
+      .send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].message).toBe('Test notification');
   });
 
-  it('should delete a notification', async () => {
-    const res = await request(app).delete(`/api/notifications/delete/${notification._id}`);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.message).toBe('Notification deleted successfully');
+  it('should fetch notifications for a specific user', async () => {
+    const notification = new Notification({
+      volunteerId: '1',
+      message: 'Test notification',
+      type: 'assignment',
+      date: new Date(),
+    });
+
+    await notification.save();
+
+    const response = await request(app)
+      .get('/api/notifications/user/1')
+      .send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].message).toBe('Test notification');
   });
 
-  it('should handle invalid notification ID format when deleting', async () => {
-    const res = await request(app).delete('/api/notifications/delete/invalid_noti_id');
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toBe('Invalid notification ID format');
+  it('should remove a notification', async () => {
+    const notification = new Notification({
+      volunteerId: '1',
+      message: 'Test notification',
+      type: 'assignment',
+      date: new Date(),
+    });
+
+    await notification.save();
+
+    const response = await request(app)
+      .delete(`/api/notifications/delete/${notification._id}`)
+      .send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Notification deleted successfully');
+
+    const notifications = await Notification.find();
+    expect(notifications.length).toBe(0);
   });
 
-  it('should return 404 when deleting a non-existing notification', async () => {
-    const res = await request(app).delete(`/api/notifications/delete/${new mongoose.Types.ObjectId().toString()}`);
-    expect(res.statusCode).toEqual(404);
-    expect(res.body.message).toBe('Notification not found');
+  it('should handle invalid notification ID format in remove notification', async () => {
+    const response = await request(app)
+      .delete('/api/notifications/delete/invalidId')
+      .send();
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe('Invalid notification ID format');
   });
 
+  it('should handle notification not found in remove notification', async () => {
+    const notiId = new mongoose.Types.ObjectId();
+    const response = await request(app)
+      .delete(`/api/notifications/delete/${notiId}`)
+      .send();
 
-
-  it('should handle no notifications for a user', async () => {
-    const res = await request(app).get(`/api/notifications/user/${new mongoose.Types.ObjectId()}`);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body.length).toBe(0);
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Notification not found');
   });
 });

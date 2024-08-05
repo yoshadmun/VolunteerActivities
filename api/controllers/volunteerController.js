@@ -1,10 +1,6 @@
 const Event = require('../models/EventModel');
 const UserProfile = require('../models/UserProfileModel');
 
-/*const getEventDetails = async (eventIds) => {
-  return await Event.find({_id: {$in: eventIds}});
-}*/
-
 const getVolunteers = async (req,res) => {
   const {search ='', page=1, pageSize=10} = req.query;
 

@@ -3,7 +3,7 @@ const Event = require('../models/EventModel');
 const { Parser } = require('json2csv');
 const { PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 
-const getVolunteersReport = async (req, res) => {
+/*const getVolunteersReport = async (req, res) => {
   try {
     const volunteers = await UserProfile.find().populate('assignedEvents completedEvents');
     res.json(volunteers);
@@ -21,7 +21,7 @@ const getEventsReport = async (req, res) => {
     console.error('Error getting event report: ', error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};
+};*/
 
 const generateCSV = (data, fields) => {
   const json2csvParser = new Parser({ fields });
@@ -245,8 +245,8 @@ const getEventsReportPDF = async (req, res) => {
 };
 
 module.exports = {
-  getVolunteersReport,
-  getEventsReport,
+  //getVolunteersReport,
+  //getEventsReport,
   getVolunteersReportCSV,
   getVolunteersReportPDF,
   getEventsReportCSV,

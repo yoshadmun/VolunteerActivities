@@ -10,8 +10,8 @@ const {
 
 const router = express.Router();
 
-router.get('/volunteers', getVolunteersReport);
-router.get('/events', getEventsReport);
+//router.get('/volunteers', getVolunteersReport);
+//router.get('/events', getEventsReport);
 router.get('/volunteers/csv', getVolunteersReportCSV);
 router.get('/volunteers/pdf', getVolunteersReportPDF);
 router.get('/events/csv', getEventsReportCSV);
