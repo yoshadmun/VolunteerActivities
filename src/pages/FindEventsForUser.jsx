@@ -103,7 +103,7 @@ const MatchedEvents = () => {
           )}
         </tbody>
       </table>
-      {message && <div style={{ marginTop: '1rem', fontSize: '1.2rem', color: 'green' }}>{message}</div>}
+      {message && <div style={{ marginTop: '1rem', fontSize: '1.5rem', color: 'black', fontWeight:'bold' }}>{message}</div>}
     </div>
   );
 };

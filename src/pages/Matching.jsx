@@ -25,6 +25,7 @@ function VolunteerMatchingForm() {
 
   const pageSize = 10; // Items per page
 
+
   useEffect(() => {
     axios.get(`http://localhost:3001/api/volunteers?search=${volunteerSearch}&page=${volunteerPage}&pageSize=${pageSize}`)
       .then(response => {
@@ -46,7 +47,7 @@ function VolunteerMatchingForm() {
   }, [volunteerSearch, volunteerPage]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/api/events?search=${eventSearch}&page=${eventPage}&pageSize=${pageSize}`)
+    axios.get(`http://localhost:3001/api/events/getmatchedevents?search=${eventSearch}&page=${eventPage}&pageSize=${pageSize}`)
       .then(response => {
         setEvents(response.data.events);
         setEventTotal(response.data.total);
@@ -56,7 +57,7 @@ function VolunteerMatchingForm() {
         setMessage('Error fetching events');
       });
 
-    axios.get('http://localhost:3001/api/events?search=&page=1&pageSize=1000')
+    axios.get('http://localhost:3001/api/events/getmatchedevents?search=&page=1&pageSize=1000')
       .then(response => {
         setAllEvents(response.data.events);
       })
@@ -273,7 +274,7 @@ function VolunteerMatchingForm() {
           </button>
         </div>
       </form>
-      {message && <div style={{ marginTop: '1rem', fontSize: '1.2rem', color: 'green' }}>{message}</div>}
+      {message && <div style={{ marginTop: '1rem', fontSize: '1.5rem', color: 'black', fontWeight:'bold' }}>{message}</div>}
     </div>
   );
 }

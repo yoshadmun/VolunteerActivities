@@ -241,6 +241,7 @@ function EventForm() {
             selected={eventData.eventDate}
             onChange={handleDateChange}
             placeholderText='Select Event Date'
+            minDate={new Date()}
             required
             wrapperClassName='eventForm'
             className='datepicker'

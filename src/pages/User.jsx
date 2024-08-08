@@ -108,6 +108,21 @@ const User = () => {
     return eventDay < today;
   };
 
+  //For cancel event
+  const handleCancelEvent = async (eventId) => {
+    try{
+      await axios.post(`http://localhost:3001/api/events/cancelevent`,{
+        userId: user.sub,
+        eventId: eventId
+      });
+      //Remove the event from the assigned events in frontend
+      setAssignedEvents(assignedEvents.filter(event => event._id !== eventId));
+      setAssignedEventIds(assignedEventIds.filter(id => id !== eventId));
+    } catch (e) {
+      console.log('Error cancelling event: ', e);
+    }
+  };
+
   const formatLocation = (location) => {
     return `${location.streetAddress}, ${location.city}, ${location.state} ${location.zipCode}`;
   };
@@ -141,27 +156,22 @@ const User = () => {
               <h3 style={{ textAlign: 'center', color:'darkslateblue' }}>{event.eventName}</h3>
               <p style={{color:'darkslateblue'}}>{formatLocation(event.location)}</p>
               <p style={{color:'darkslateblue'}}><strong>Date:</strong>{formatDate(event.date)}</p>
-              <button
-                onClick={() => handleCompleteEvent(event._id)}
-                disabled={!isEventPast(event.date)}
-              >
-                {isEventPast(event.date) ? 'Complete' : 'Not Completed Yet'}
-              </button>
+              <div style={{display:'flex',justifyContent:'space-between'}}>
+                <button
+                  onClick={() => handleCompleteEvent(event._id)}
+                  disabled={!isEventPast(event.date)}
+                >
+                  {isEventPast(event.date) ? 'Complete' : 'Not Completed Yet'}
+                </button>
+                <button
+                  onClick={() => handleCancelEvent(event._id)}
+                  style={{marginLeft: '10px'}}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           ))}
-        </section>
-
-        <section className="events-section">
-          <h2 style={{color:'darkslateblue'}}>Completed Events</h2>
-          <ul className="events-list">
-            {completedEvents.map(event => (
-              <li key={event._id} className="event-card">
-                <h3 style={{ textAlign: 'center', color:'darkslateblue' }}>{event.eventName}</h3>
-                <p style={{color:'darkslateblue'}}>{formatLocation(event.location)}</p>
-                <p style={{color:'darkslateblue'}}><strong>Date:</strong> {formatDate(event.date)}</p>
-              </li>
-            ))}
-          </ul>
         </section>
       </div>
     </div>

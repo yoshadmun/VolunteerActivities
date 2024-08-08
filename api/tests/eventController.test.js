@@ -10,6 +10,8 @@ const {
   completeEvent,
   getCompletedEvents,
   removeEvent,
+  getMatchedEvents,
+  cancelEvent
 } = require('../controllers/eventController');
 const Event = require('../models/EventModel');
 const UserProfile = require('../models/UserProfileModel');
@@ -25,6 +27,8 @@ app.get('/api/events/geteventbyid/:eventId', getEventById);
 app.post('/api/events/complete', completeEvent);
 app.get('/api/events/getcompletedevents/:volunteerId', getCompletedEvents);
 app.put('/api/events/remove/:eventId/active', removeEvent);
+app.get('/api/events/getmatchedevents', getMatchedEvents);  // Update this route
+app.post('/api/events/cancelevent', cancelEvent);
 
 describe('Event Controller', () => {
   it('should fetch events with pagination and search', async () => {
@@ -386,5 +390,96 @@ describe('Event Controller', () => {
 
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Event not found');
+  });
+
+  it('should get matched events for a volunteer', async () => {
+    const volunteer = new UserProfile({
+      userId: 'volunteer1',
+      fullName: 'Test Volunteer',
+      location: {
+        address1: '123 Test St',
+        city: 'Test City',
+        state: 'TS',
+        zipCode: '12345',
+      },
+      skills: ['Organizing'],
+      availability: new Date(),
+      assignedEvents: [],
+      completedEvents: [],
+      active: true,
+    });
+    await volunteer.save();
+
+    const event = new Event({
+      eventName: 'Community Cleanup Drive',
+      eventDescription: 'Help clean up the community',
+      location: {
+        streetAddress: '456 Event St',
+        city: 'Event City',
+        state: 'EV',
+        zipCode: '67890',
+      },
+      requiredSkills: ['Organizing'],
+      urgency: 'High',
+      date: new Date(new Date().setDate(new Date().getDate() + 1)), // Set date to tomorrow
+      assignedVolunteers: [],
+      active: true,
+    });
+    await event.save();
+
+    const response = await request(app).get(`/api/events/getmatchedevents`);
+    expect(response.status).toBe(200);
+    expect(response.body.events.length).toBe(1); // Access the events array from the response body
+    expect(response.body.events[0].eventName).toBe('Community Cleanup Drive');
+  });
+
+  it('should cancel event for a volunteer', async () => {
+    const volunteer = new UserProfile({
+      userId: 'volunteer1',
+      fullName: 'Test Volunteer',
+      location: {
+        address1: '123 Test St',
+        city: 'Test City',
+        state: 'TS',
+        zipCode: '12345',
+      },
+      skills: ['Organizing'],
+      availability: new Date(),
+      assignedEvents: [],
+      completedEvents: [],
+      active: true,
+    });
+    await volunteer.save();
+
+    const event = new Event({
+      eventName: 'Community Cleanup Drive',
+      eventDescription: 'Help clean up the community',
+      location: {
+        streetAddress: '456 Event St',
+        city: 'Event City',
+        state: 'EV',
+        zipCode: '67890',
+      },
+      requiredSkills: ['Organizing'],
+      urgency: 'High',
+      date: new Date(new Date().setDate(new Date().getDate() + 1)), // Set date to tomorrow
+      assignedVolunteers: [volunteer.userId],
+      active: true,
+    });
+    await event.save();
+
+    volunteer.assignedEvents.push(event._id);
+    await volunteer.save();
+
+    const response = await request(app)
+      .post('/api/events/cancelevent')
+      .send({ userId: volunteer.userId, eventId: event._id.toString() });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Cancel event for user successfully, ');
+    const updatedVolunteer = await UserProfile.findById(volunteer._id);
+    const updatedEvent = await Event.findById(event._id);
+    expect(updatedVolunteer.assignedEvents.length).toBe(0);
+    expect(updatedEvent.assignedVolunteers.length).toBe(0);
   });
 });

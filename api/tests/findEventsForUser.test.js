@@ -45,7 +45,7 @@ describe('Find Events For User API', () => {
       },
       requiredSkills: ['Organizing'],
       urgency: 'High',
-      date: new Date('2024-08-01'),
+      date: new Date('2024-08-10'),
       assignedVolunteers: [],
       active: true,
     });

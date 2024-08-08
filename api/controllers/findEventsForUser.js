@@ -5,6 +5,7 @@ const { isValidObjectId } = mongoose;
 
 const getEventsMatchingSkills = async (req, res) => {
   const { volunteerId } = req.params;
+  const today = new Date();
   try {
     const volunteer = await UserProfile.findOne({ userId: volunteerId });
     if (!volunteer) {
@@ -12,7 +13,7 @@ const getEventsMatchingSkills = async (req, res) => {
     }
     const matchingEvents = await Event.find({
       requiredSkills: { $in: volunteer.skills },
-      date: { $gte: new Date(volunteer.availability) },
+      date: { $gte: today },
       active: true,
       _id: { $nin: volunteer.completedEvents },
     });

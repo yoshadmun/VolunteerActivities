@@ -21,6 +21,31 @@ const getEvents = async (req, res) => {
   }
 };
 
+const getMatchedEvents = async (req, res) => {
+  const { search = '', page = 1, pageSize = 10 } = req.query;
+  const today = new Date();
+
+  try {
+    const query = {
+      active: true,
+      eventName: { $regex: search, $options: 'i' },
+      date: { $gte: today } // Only include events that have not occurred yet
+    };
+    const events = await Event.find(query)
+      .skip((page - 1) * pageSize)
+      .limit(parseInt(pageSize));
+    const total = await Event.countDocuments(query);
+
+    res.json({
+      events,
+      total,
+    });
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const createEvent = async (req,res) => {
   const newEvent = new Event(req.body);
   try{
@@ -128,6 +153,35 @@ const removeEvent = async (req,res) => {
   }
 };
 
+const cancelEvent = async (req, res) => {
+  const {userId, eventId} = req.body;
+  
+  try {
+    console.log('Received userId and eventId: ', userId,' ,', eventId);
+
+    const volunteer = await UserProfile.findOne({userId});
+    if(!volunteer){
+      return res.status(404).json({message: 'User not found to cancel event'});
+    }
+
+    const event = await Event.findById(eventId);
+    if(!event){
+      return res.status(404).json({message: 'Event not found for cancelling'});
+    }
+
+    volunteer.assignedEvents.pull(eventId);
+    await volunteer.save();
+
+    event.assignedVolunteers.pull(userId);
+    await event.save();
+    
+    res.status(200).json({message: 'Cancel event for user successfully, ', volunteer})
+  } catch (e) {
+    console.log('Error cancelling event for user: ', e);
+    res.status(500).json({message:'Internal server error'});
+  }
+};
+
 module.exports = {
   getEvents,
   createEvent,
@@ -136,4 +190,6 @@ module.exports = {
   completeEvent,
   getCompletedEvents,
   removeEvent,
+  cancelEvent,
+  getMatchedEvents,
 };
