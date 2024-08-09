@@ -26,5 +26,4 @@ Pw: Name123.gmail
 Note: For ID name starts with lower case letter (bob). For password, name starts with upper case letter (Bob)
 
 To run code coverage report, go to the api folder using the “cd api” command then run “npm test” inside the api folder. Code coverage is above 80%
-![code coverage report](https://github.com/user-attachments/assets/47c4eb9d-2b91-4e02-8c09-c0b28d78c238)
-
+![code_coverage](https://github.com/user-attachments/assets/d00d2111-3fb0-4c49-ad7c-a1ae7ea2eca3)
