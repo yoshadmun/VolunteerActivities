@@ -13,6 +13,8 @@ To open the server, run: node api/server.js
 For user, create new account or use
 ID: tylerp2405@gmail.com
 Pw: Thinh2405!
+Note: Password must have 8 characters in length, lower case (a-z), upper case (A-Z), numbers (0-9), and special
+characters (!@#$%^&*)
 
 For admin, use:
 ID: thinhpham240594@gmail.com
